@@ -69,13 +69,13 @@
   --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 :root[data-theme="light"] {
-  --bg:   #FFFFFF;
-  --fg:   #000000;
-  --dim:  rgba(0,0,0,0.62);
-  --dim2: rgba(0,0,0,0.38);
-  --line: rgba(0,0,0,0.16);
-  --line-strong: rgba(0,0,0,0.36);
-  --panel: rgba(0,0,0,0.025);
+  --bg:   #E9E7E2;
+  --fg:   #0B0B0B;
+  --dim:  rgba(11,11,11,0.66);
+  --dim2: rgba(11,11,11,0.44);
+  --line: rgba(11,11,11,0.18);
+  --line-strong: rgba(11,11,11,0.38);
+  --panel: rgba(11,11,11,0.05);
   --accent: #8F4319;
   --accent-text: #8F4319;
   --accent-dim: rgba(143,67,25,0.55);
@@ -802,7 +802,7 @@ footer { border-top: 1px solid var(--line); padding: 24px 0; color: var(--dim2);
   function setTheme(mode) {
     root.setAttribute("data-theme", mode);
     document.querySelector('meta[name="theme-color"]')
-      .setAttribute("content", mode === "light" ? "#FFFFFF" : "#000000");
+      .setAttribute("content", mode === "light" ? "#E9E7E2" : "#000000");
     themeBtn.textContent = mode === "light" ? "INVERT ●" : "INVERT ○";
     try { localStorage.setItem("theme", mode); } catch (e) {}
     if (window.__stars) window.__stars.recolor();
