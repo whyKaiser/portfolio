@@ -1,468 +1,294 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="en" dir="ltr" data-theme="dark">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Ahmed Alshareef — Software Engineer</title>
 <meta name="description" content="Ahmed Kamal Alshareef — Computer Science graduate from Umm Al-Qura University building applications and data systems with Flutter, React, TypeScript, Node.js and SQL. Makkah, Saudi Arabia.">
-<meta name="theme-color" content="#0E3B2E">
+<meta name="theme-color" content="#000000">
 <meta property="og:title" content="Ahmed Alshareef — Software Engineer">
 <meta property="og:description" content="Applications & data systems. Flutter, React, TypeScript, Node.js, SQL. Makkah, Saudi Arabia.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://whykaiser.github.io/portfolio/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' fill='%230E3B2E'/><path d='M32 10 L54 32 L32 54 L10 32Z' fill='none' stroke='%23C8A44A' stroke-width='4'/><path d='M32 22 L42 32 L32 42 L22 32Z' fill='%23C8A44A'/></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' fill='%23000'/><circle cx='32' cy='32' r='7' fill='%23fff'/><circle cx='14' cy='16' r='2.5' fill='%23fff'/><circle cx='50' cy='46' r='2.5' fill='%23fff'/><circle cx='48' cy='15' r='1.8' fill='%23fff'/><circle cx='15' cy='49' r='1.8' fill='%23fff'/></svg>">
 
 <style>
+/* ============================================================ tokens
+   The whole site is two colours. Flipping the theme swaps them, and every
+   surface, rule, star and hover state is derived from those two.        */
 :root {
-  --ivory:      #F6F1E7;
-  --ivory-2:    #EDE5D6;
-  --green:      #0E3B2E;
-  --green-2:    #15513E;
-  --green-deep: #082A20;
-  --gold:       #C8A44A;
-  --gold-soft:  #E3CE96;
-  --ink:        #141A17;
-  --muted:      #5C6B62;
-  --muted-on-green: #A9C0B4;
-  --line:       rgba(20,26,23,0.14);
-  --line-gold:  rgba(200,164,74,0.30);
+  --bg:   #000000;
+  --fg:   #FFFFFF;
+  --dim:  rgba(255,255,255,0.58);
+  --dim2: rgba(255,255,255,0.34);
+  --line: rgba(255,255,255,0.16);
+  --line-strong: rgba(255,255,255,0.34);
+  --panel: rgba(255,255,255,0.03);
+
   --sans: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Consolas, monospace;
   --arab: 'IBM Plex Sans Arabic', 'Segoe UI', Tahoma, sans-serif;
-  --wrap: 1140px;
+  --wrap: 1180px;
   --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+:root[data-theme="light"] {
+  --bg:   #FFFFFF;
+  --fg:   #000000;
+  --dim:  rgba(0,0,0,0.62);
+  --dim2: rgba(0,0,0,0.38);
+  --line: rgba(0,0,0,0.16);
+  --line-strong: rgba(0,0,0,0.36);
+  --panel: rgba(0,0,0,0.025);
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
 
 body {
-  background: var(--ivory);
-  color: var(--ink);
+  background: var(--bg);
+  color: var(--fg);
   font-family: var(--sans);
   font-size: 16px;
-  line-height: 1.65;
+  line-height: 1.6;
   overflow-x: hidden;
-  text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
+  transition: background 0.45s var(--ease), color 0.45s var(--ease);
 }
 html[dir="rtl"] body { font-family: var(--arab); }
+::selection { background: var(--fg); color: var(--bg); }
 
-::selection { background: var(--gold); color: var(--green-deep); }
+a { color: inherit; }
+.wrap { width: min(var(--wrap), calc(100% - 44px)); margin-inline: auto; }
 
-.wrap { width: min(var(--wrap), calc(100% - 48px)); margin-inline: auto; }
-
-/* ---------------------------------------------------------- shared type */
-.kicker {
-  font-size: 0.72rem;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  font-weight: 600;
-  color: var(--gold);
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-html[dir="rtl"] .kicker { letter-spacing: 0; }
-.kicker::before {
-  content: "";
-  width: 26px; height: 1px;
-  background: var(--gold);
-  flex: none;
-}
-
-.h2 {
-  font-size: clamp(2rem, 5vw, 3.15rem);
-  line-height: 1.08;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  margin: 18px 0 0;
-}
-html[dir="rtl"] .h2 { letter-spacing: 0; line-height: 1.35; }
-
-.lede { color: var(--muted); max-width: 58ch; margin-top: 16px; font-size: 1.02rem; }
-
-section { padding: clamp(72px, 11vw, 128px) 0; position: relative; }
-section.on-green { background: var(--green); color: var(--ivory); }
-section.on-green .lede { color: var(--muted-on-green); }
-
-/* ------------------------------------------------- najdi pattern bands */
-.pattern-band {
-  height: 26px;
-  background-repeat: repeat-x;
-  background-size: auto 26px;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='52' height='26' viewBox='0 0 52 26'><g fill='none' stroke='%23C8A44A' stroke-width='1.1' opacity='0.55'><path d='M0 26 L13 2 L26 26 L39 2 L52 26'/></g><g fill='%23C8A44A' opacity='0.35'><path d='M13 10 L19 20 L7 20 Z'/><path d='M39 10 L45 20 L33 20 Z'/></g></svg>");
-}
-.pattern-band.flip { transform: scaleY(-1); }
-
-.lattice {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  opacity: 0.5;
-}
-
-/* ------------------------------------------------------------------ nav */
-header.nav {
+/* ------------------------------------------------------- star canvas */
+#stars {
   position: fixed;
-  inset-inline: 0;
-  top: 0;
-  z-index: 60;
-  background: rgba(14,59,46,0.92);
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid rgba(200,164,74,0.22);
-  transition: padding 0.3s var(--ease);
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
 }
-.nav-inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-  padding: 14px 0;
-}
-.brand {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  color: var(--ivory);
-  text-decoration: none;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  font-size: 0.82rem;
-}
-.brand svg { flex: none; }
-.nav-links { display: flex; gap: 30px; align-items: center; }
-.nav-links a {
-  color: var(--muted-on-green);
-  text-decoration: none;
-  font-size: 0.76rem;
-  font-weight: 600;
+.page { position: relative; z-index: 1; }
+
+/* --------------------------------------------------------- type kit */
+.mono {
+  font-family: var(--mono);
+  font-size: 0.72rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  position: relative;
-  padding-bottom: 3px;
-  transition: color 0.25s var(--ease);
 }
-html[dir="rtl"] .nav-links a { letter-spacing: 0; text-transform: none; font-size: 0.9rem; }
-.nav-links a::after {
-  content: "";
-  position: absolute;
-  inset-inline-start: 0;
-  bottom: 0;
-  width: 0; height: 1.5px;
-  background: var(--gold);
-  transition: width 0.3s var(--ease);
-}
-.nav-links a:hover { color: var(--ivory); }
-.nav-links a:hover::after { width: 100%; }
+html[dir="rtl"] .mono { letter-spacing: 0; text-transform: none; font-size: 0.8rem; }
 
-.lang-btn {
-  font: inherit;
-  font-size: 0.74rem;
+.sec-head { display: flex; align-items: baseline; gap: 18px; border-bottom: 1px solid var(--line); padding-bottom: 16px; }
+.sec-head .idx { color: var(--dim2); }
+.h2 {
+  font-size: clamp(1.9rem, 4.4vw, 2.9rem);
   font-weight: 700;
-  letter-spacing: 0.12em;
-  color: var(--gold);
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+}
+html[dir="rtl"] .h2 { letter-spacing: 0; line-height: 1.35; }
+.lede { color: var(--dim); max-width: 62ch; margin-top: 20px; }
+
+section { padding: clamp(70px, 10vw, 118px) 0; position: relative; }
+
+/* -------------------------------------------------------- scroll bar */
+#progress {
+  position: fixed;
+  top: 0; inset-inline-start: 0;
+  height: 2px;
+  width: 0;
+  background: var(--fg);
+  z-index: 90;
+  transition: width 0.08s linear;
+}
+
+/* -------------------------------------------------------------- nav */
+header.nav {
+  position: fixed;
+  inset-inline: 0; top: 0;
+  z-index: 80;
+  background: color-mix(in srgb, var(--bg) 86%, transparent);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--line);
+}
+.nav-inner { display: flex; align-items: center; justify-content: space-between; gap: 18px; padding: 13px 0; }
+.brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; font-weight: 700; letter-spacing: 0.1em; font-size: 0.8rem; }
+.brand .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--fg); flex: none; }
+.nav-links { display: flex; gap: 26px; }
+.nav-links a { text-decoration: none; color: var(--dim); transition: color 0.25s var(--ease); }
+.nav-links a:hover { color: var(--fg); }
+.nav-tools { display: flex; gap: 10px; align-items: center; }
+
+.ctl {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  color: var(--fg);
   background: transparent;
-  border: 1px solid var(--line-gold);
-  border-radius: 999px;
-  padding: 7px 16px;
+  border: 1px solid var(--line-strong);
+  padding: 7px 13px;
   cursor: pointer;
   transition: background 0.25s var(--ease), color 0.25s var(--ease);
 }
-.lang-btn:hover { background: var(--gold); color: var(--green-deep); }
+.ctl:hover { background: var(--fg); color: var(--bg); }
 
-/* ---------------------------------------------------------------- hero */
-#hero {
-  background: var(--green);
-  color: var(--ivory);
-  padding: clamp(140px, 20vw, 200px) 0 clamp(80px, 10vw, 120px);
-  overflow: hidden;
-}
-.hero-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1.35fr) minmax(0, 0.85fr);
-  gap: 56px;
-  align-items: center;
-  position: relative;
-  z-index: 2;
-}
+/* ------------------------------------------------------------- hero */
+#hero { padding: clamp(150px, 19vw, 210px) 0 clamp(60px, 8vw, 90px); }
+.hero-meta { display: flex; flex-wrap: wrap; gap: 10px 26px; color: var(--dim2); }
 .hero-name {
-  font-size: clamp(2.9rem, 8.5vw, 6.1rem);
-  line-height: 0.98;
+  font-size: clamp(3rem, 11vw, 8.2rem);
+  line-height: 0.92;
   font-weight: 700;
-  letter-spacing: -0.035em;
-  margin: 22px 0 0;
+  letter-spacing: -0.05em;
+  margin: 26px 0 0;
+  text-transform: uppercase;
 }
-html[dir="rtl"] .hero-name { letter-spacing: 0; line-height: 1.25; }
-.hero-name .gold { color: var(--gold); }
-.hero-role {
-  margin-top: 22px;
-  font-size: clamp(1rem, 2.2vw, 1.22rem);
-  font-weight: 500;
-  color: var(--gold-soft);
+html[dir="rtl"] .hero-name { letter-spacing: 0; line-height: 1.2; text-transform: none; }
+.hero-name .out {
+  -webkit-text-stroke: 1.5px var(--fg);
+  color: transparent;
 }
-.hero-sub {
-  margin-top: 18px;
-  max-width: 54ch;
-  color: var(--muted-on-green);
-  font-size: 1.02rem;
-}
-.hero-cta { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 34px; }
+.hero-line { height: 1px; background: var(--line-strong); margin: 34px 0 26px; }
+.hero-cols { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 40px; align-items: start; }
+.hero-sub { color: var(--dim); max-width: 52ch; }
+.hero-cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
 .btn {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  padding: 13px 26px;
-  border-radius: 2px;
+  padding: 13px 24px;
   font-weight: 600;
-  font-size: 0.92rem;
+  font-size: 0.9rem;
   text-decoration: none;
-  border: 1px solid transparent;
-  transition: transform 0.25s var(--ease), background 0.25s var(--ease), color 0.25s var(--ease);
+  border: 1px solid var(--fg);
+  transition: background 0.28s var(--ease), color 0.28s var(--ease), transform 0.28s var(--ease);
 }
-.btn-solid { background: var(--gold); color: var(--green-deep); }
-.btn-solid:hover { transform: translateY(-2px); background: var(--gold-soft); }
-.btn-ghost { border-color: var(--line-gold); color: var(--ivory); }
-.btn-ghost:hover { transform: translateY(-2px); background: rgba(200,164,74,0.12); }
+.btn-solid { background: var(--fg); color: var(--bg); }
+.btn:hover { transform: translateY(-2px); }
+.btn-ghost:hover { background: var(--fg); color: var(--bg); }
 
-.status {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  margin-top: 34px;
-  padding: 9px 18px;
-  border: 1px solid var(--line-gold);
-  border-radius: 999px;
-  font-size: 0.82rem;
-  color: var(--gold-soft);
-}
-.status i {
-  width: 7px; height: 7px;
-  background: var(--gold);
-  border-radius: 50%;
-  animation: blink 2.8s infinite;
-  flex: none;
-}
-@keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0.25; } }
+.status { display: inline-flex; align-items: center; gap: 10px; color: var(--dim); margin-top: 26px; }
+.status i { width: 7px; height: 7px; border-radius: 50%; background: var(--fg); animation: pulse 2.6s infinite; flex: none; }
+@keyframes pulse { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.2; transform: scale(0.7); } }
 
-/* the one moving ornament on the page: a slow geometric seal */
-.seal { display: grid; place-items: center; }
-.seal svg { width: min(100%, 380px); height: auto; }
-.seal .rot-slow { transform-origin: 200px 200px; animation: spin 90s linear infinite; }
-.seal .rot-back { transform-origin: 200px 200px; animation: spin 130s linear infinite reverse; }
-@keyframes spin { to { transform: rotate(360deg); } }
-
-/* ------------------------------------------------------------- marquee */
-.strip {
-  background: var(--green-deep);
-  border-block: 1px solid rgba(200,164,74,0.2);
-  overflow: hidden;
-  padding: 15px 0;
+/* ---------------------------------------------------------- readout */
+.readout {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0,1fr));
+  border: 1px solid var(--line);
+  border-inline-end: 0;
 }
-.strip-track {
-  display: flex;
-  gap: 46px;
-  width: max-content;
-  animation: slide 46s linear infinite;
-  color: var(--gold-soft);
-  font-size: 0.78rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  font-weight: 600;
+.readout div { padding: 20px 22px; border-inline-end: 1px solid var(--line); }
+.readout .val { font-family: var(--mono); font-size: clamp(1.5rem, 3.4vw, 2.2rem); font-weight: 700; line-height: 1; }
+.readout .lbl { color: var(--dim2); margin-top: 9px; }
+
+/* ------------------------------------------------------- experience */
+.rows { border-top: 1px solid var(--line); margin-top: 40px; }
+.row-item {
+  display: grid;
+  grid-template-columns: 190px 1fr;
+  gap: 30px;
+  padding: 28px 6px;
+  border-bottom: 1px solid var(--line);
+  transition: background 0.3s var(--ease), padding-inline-start 0.3s var(--ease);
+}
+.row-item:hover { background: var(--panel); padding-inline-start: 16px; }
+.row-item .when { color: var(--dim2); }
+.row-item h3 { font-size: 1.15rem; font-weight: 700; }
+.row-item .where { color: var(--dim); font-size: 0.92rem; margin-top: 3px; }
+.row-item ul { margin-top: 12px; padding-inline-start: 18px; color: var(--dim); font-size: 0.95rem; }
+.row-item li { margin-bottom: 6px; }
+
+/* --------------------------------------------------------- projects */
+.projects { margin-top: 40px; border-top: 1px solid var(--line); }
+.proj {
+  display: grid;
+  grid-template-columns: 62px minmax(0, 1.15fr) minmax(0, 1.35fr) auto;
+  gap: 26px;
+  align-items: start;
+  padding: 26px 14px;
+  border-bottom: 1px solid var(--line);
+  text-decoration: none;
+  color: inherit;
+  transition: background 0.32s var(--ease), color 0.32s var(--ease), padding 0.32s var(--ease);
+}
+/* the signature move: a row inverts to the opposite colour on hover */
+a.proj:hover { background: var(--fg); color: var(--bg); padding-inline: 22px 6px; }
+a.proj:hover .p-stack, a.proj:hover .p-desc, a.proj:hover .p-no { color: inherit; opacity: 0.72; }
+a.proj:hover .p-go { opacity: 1; transform: none; }
+.p-no { font-family: var(--mono); font-size: 0.78rem; color: var(--dim2); padding-top: 4px; }
+.p-title { font-size: 1.18rem; font-weight: 700; line-height: 1.25; }
+.p-stack { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.08em; color: var(--dim2); margin-top: 8px; }
+.p-desc { color: var(--dim); font-size: 0.93rem; }
+.p-go {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  opacity: 0;
+  transform: translateX(-8px);
+  transition: opacity 0.3s var(--ease), transform 0.3s var(--ease);
+  padding-top: 4px;
   white-space: nowrap;
 }
-html[dir="rtl"] .strip-track { letter-spacing: 0; text-transform: none; font-size: 0.9rem; }
-.strip-track span { display: inline-flex; align-items: center; gap: 46px; }
-.strip-track span::after { content: "◈"; color: var(--gold); opacity: 0.7; }
-@keyframes slide { to { transform: translateX(-50%); } }
+html[dir="rtl"] .p-go { transform: translateX(8px); }
+.proj.static { cursor: default; }
+.proj.static .p-go { opacity: 1; transform: none; color: var(--dim2); }
 
-/* ---------------------------------------------------------- experience */
-.exp { margin-top: 54px; display: grid; gap: 0; }
-.exp-item {
-  display: grid;
-  grid-template-columns: 210px 1fr;
-  gap: 34px;
-  padding: 34px 0;
-  border-top: 1px solid var(--line);
-}
-.exp-item:last-child { border-bottom: 1px solid var(--line); }
-.exp-when {
-  font-size: 0.82rem;
-  font-weight: 600;
-  letter-spacing: 0.05em;
-  color: var(--gold);
-  display: flex;
-  gap: 10px;
-  align-items: baseline;
-}
-.exp-when::before { content: "◈"; font-size: 0.7rem; }
-.exp h3 { font-size: 1.22rem; font-weight: 700; }
-.exp .where { color: var(--muted); font-size: 0.92rem; margin-top: 4px; }
-.exp ul { margin: 14px 0 0; padding-inline-start: 20px; color: var(--muted); }
-.exp li { margin-bottom: 7px; }
-.exp li::marker { color: var(--gold); }
+/* ----------------------------------------------------------- skills */
+.skill-cols { margin-top: 40px; display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 34px; }
+.skill-col h4 { padding-bottom: 12px; border-bottom: 1px solid var(--line-strong); color: var(--dim2); }
+.skill-row { display: flex; align-items: center; justify-content: space-between; gap: 18px; padding: 12px 0; border-bottom: 1px solid var(--line); font-size: 0.95rem; }
+.meter { font-family: var(--mono); font-size: 0.8rem; letter-spacing: 0.1em; flex: none; color: var(--fg); }
+.meter em { opacity: 0.22; font-style: normal; }
 
-/* ------------------------------------------------------------ projects */
-.proj-grid {
-  margin-top: 54px;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 22px;
-}
-.proj {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  padding: 30px 28px 26px;
-  background: var(--ivory-2);
-  border: 1px solid var(--line);
-  border-radius: 3px;
-  color: inherit;
-  text-decoration: none;
-  overflow: hidden;
-  transition: transform 0.35s var(--ease), border-color 0.35s var(--ease), background 0.35s var(--ease);
-}
-.proj::before {
-  content: "";
-  position: absolute;
-  inset-inline-start: 0; top: 0;
-  width: 3px; height: 0;
-  background: var(--gold);
-  transition: height 0.4s var(--ease);
-}
-a.proj:hover { transform: translateY(-5px); border-color: var(--line-gold); background: #F0E9DA; }
-a.proj:hover::before { height: 100%; }
-.proj .no {
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.18em;
-  color: var(--gold);
-}
-.proj h3 { margin-top: 12px; font-size: 1.16rem; font-weight: 700; line-height: 1.3; }
-.proj p { margin-top: 12px; color: var(--muted); font-size: 0.92rem; flex: 1; }
-.tags { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 20px; }
-.tag {
-  font-size: 0.7rem;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  padding: 5px 11px;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  color: var(--muted);
-  background: rgba(255,255,255,0.55);
-}
-.tag.live { border-color: var(--line-gold); color: #8A6D18; background: rgba(200,164,74,0.14); }
-.proj .go {
-  margin-top: 18px;
-  font-size: 0.78rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  color: var(--gold);
-  opacity: 0;
-  transform: translateX(-6px);
-  transition: opacity 0.3s var(--ease), transform 0.3s var(--ease);
-}
-html[dir="rtl"] .proj .go { transform: translateX(6px); }
-a.proj:hover .go { opacity: 1; transform: none; }
+/* ------------------------------------------------------------ certs */
+.certs { margin-top: 40px; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); }
+.cert { background: var(--bg); padding: 26px 24px; transition: background 0.3s var(--ease), color 0.3s var(--ease); }
+.cert:hover { background: var(--fg); color: var(--bg); }
+.cert .tag { color: var(--dim2); }
+.cert:hover .tag, .cert:hover p { color: inherit; opacity: 0.75; }
+.cert h4 { margin-top: 12px; font-size: 1rem; font-weight: 700; }
+.cert p { margin-top: 8px; color: var(--dim); font-size: 0.88rem; }
 
-/* -------------------------------------------------------------- skills */
-.skill-cols {
-  margin-top: 54px;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 40px;
-}
-.skill-col h4 {
-  font-size: 0.76rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--gold);
-  padding-bottom: 12px;
-  border-bottom: 1px solid var(--line-gold);
-}
-html[dir="rtl"] .skill-col h4 { letter-spacing: 0; text-transform: none; font-size: 0.95rem; }
-.skill-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  padding: 13px 0;
-  border-bottom: 1px solid rgba(200,164,74,0.14);
-  font-size: 0.95rem;
-}
-.pips { display: flex; gap: 5px; flex: none; }
-.pips i {
-  width: 9px; height: 9px;
-  transform: rotate(45deg);
-  border: 1px solid var(--gold);
-  display: block;
-}
-.pips i.on { background: var(--gold); }
-
-/* --------------------------------------------------------------- certs */
-.certs { margin-top: 54px; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-.cert {
-  border: 1px solid var(--line);
-  border-radius: 3px;
-  padding: 26px 24px;
-  background: var(--ivory-2);
-}
-.cert h4 { font-size: 1rem; font-weight: 700; }
-.cert p { margin-top: 9px; color: var(--muted); font-size: 0.88rem; }
-.cert .mark { color: var(--gold); font-size: 0.8rem; letter-spacing: 0.2em; }
-
-/* ------------------------------------------------------------- contact */
-#contact .h2 { max-width: 16ch; }
-.contact-list { margin-top: 40px; display: grid; gap: 0; max-width: 720px; }
+/* ---------------------------------------------------------- contact */
+.contact-list { margin-top: 36px; border-top: 1px solid var(--line); }
 .contact-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-  padding: 20px 4px;
-  border-top: 1px solid rgba(200,164,74,0.25);
-  color: var(--ivory);
+  display: flex; align-items: center; justify-content: space-between; gap: 20px;
+  padding: 20px 8px;
+  border-bottom: 1px solid var(--line);
   text-decoration: none;
   font-size: 1.02rem;
-  transition: padding-inline-start 0.3s var(--ease), color 0.3s var(--ease);
+  transition: background 0.3s var(--ease), color 0.3s var(--ease), padding 0.3s var(--ease);
 }
-.contact-row:last-child { border-bottom: 1px solid rgba(200,164,74,0.25); }
-.contact-row span:first-child {
-  font-size: 0.74rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--gold);
-  flex: none;
-  width: 120px;
-}
-html[dir="rtl"] .contact-row span:first-child { letter-spacing: 0; text-transform: none; font-size: 0.9rem; }
-.contact-row:hover { padding-inline-start: 14px; color: var(--gold-soft); }
+.contact-row:hover { background: var(--fg); color: var(--bg); padding-inline: 18px 8px; }
+.contact-row .k { color: var(--dim2); flex: none; width: 130px; }
+.contact-row:hover .k { color: inherit; opacity: 0.72; }
 
-footer {
-  background: var(--green-deep);
-  color: var(--muted-on-green);
-  font-size: 0.82rem;
-  padding: 26px 0;
-}
+footer { border-top: 1px solid var(--line); padding: 24px 0; color: var(--dim2); }
 .foot-inner { display: flex; flex-wrap: wrap; gap: 12px; justify-content: space-between; }
 
-/* ------------------------------------------------------------- reveals */
-.js .rv { opacity: 0; transform: translateY(22px); transition: opacity 0.7s var(--ease), transform 0.7s var(--ease); }
+/* ---------------------------------------------------------- reveals */
+.js .rv { opacity: 0; transform: translateY(20px); transition: opacity 0.65s var(--ease), transform 0.65s var(--ease); }
 .js .rv.in { opacity: 1; transform: none; }
 
-@media (max-width: 900px) {
-  .hero-grid { grid-template-columns: 1fr; gap: 36px; }
-  .seal { order: -1; }
-  .seal svg { width: min(72%, 260px); }
-  .exp-item { grid-template-columns: 1fr; gap: 12px; }
+@media (max-width: 940px) {
+  .hero-cols { grid-template-columns: 1fr; gap: 26px; }
+  .readout { grid-template-columns: repeat(2, 1fr); border-inline-end: 1px solid var(--line); }
+  .readout div:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
+  .readout div:nth-child(2n) { border-inline-end: 0; }
+  .row-item { grid-template-columns: 1fr; gap: 10px; }
+  .proj { grid-template-columns: 40px 1fr; gap: 8px 16px; }
+  .proj .p-desc { grid-column: 2; }
+  .proj .p-go { grid-column: 2; opacity: 1; transform: none; }
   .nav-links { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
   * { animation: none !important; transition: none !important; }
-  .rv { opacity: 1; transform: none; }
+  .js .rv { opacity: 1; transform: none; }
   html { scroll-behavior: auto; }
 }
 </style>
@@ -470,109 +296,92 @@ footer {
 
 <body>
 
+<div id="progress"></div>
+<canvas id="stars" aria-hidden="true"></canvas>
+
+<div class="page">
+
 <header class="nav">
   <div class="wrap nav-inner">
-    <a class="brand" href="#top">
-      <svg width="22" height="22" viewBox="0 0 64 64" aria-hidden="true">
-        <path d="M32 6 L58 32 L32 58 L6 32Z" fill="none" stroke="#C8A44A" stroke-width="3"/>
-        <path d="M32 20 L44 32 L32 44 L20 32Z" fill="#C8A44A"/>
-      </svg>
-      <span data-ar="أحمد الشريف">AHMED ALSHAREEF</span>
-    </a>
-    <nav class="nav-links">
+    <a class="brand mono" href="#top"><span class="dot"></span><span data-ar="أحمد الشريف">AHMED ALSHAREEF</span></a>
+    <nav class="nav-links mono">
       <a href="#work" data-ar="الخبرة">Work</a>
       <a href="#projects" data-ar="المشاريع">Projects</a>
       <a href="#skills" data-ar="المهارات">Skills</a>
       <a href="#certs" data-ar="الشهادات">Certs</a>
       <a href="#contact" data-ar="تواصل">Contact</a>
     </nav>
-    <button class="lang-btn" id="lang" type="button" aria-label="Switch language">عربي</button>
+    <div class="nav-tools">
+      <button class="ctl" id="lang" type="button">عربي</button>
+      <button class="ctl" id="theme" type="button" aria-label="Invert theme">INVERT</button>
+    </div>
   </div>
 </header>
 
 <!-- ============================================================ HERO -->
 <section id="hero">
-  <div class="lattice" aria-hidden="true">
-    <svg width="100%" height="100%" preserveAspectRatio="none">
-      <defs>
-        <pattern id="najdi" width="72" height="72" patternUnits="userSpaceOnUse">
-          <path d="M36 4 L68 36 L36 68 L4 36Z" fill="none" stroke="#C8A44A" stroke-width="0.9" opacity="0.16"/>
-          <path d="M36 22 L50 36 L36 50 L22 36Z" fill="#C8A44A" opacity="0.06"/>
-          <path d="M0 36 H4 M68 36 H72 M36 0 V4 M36 68 V72" stroke="#C8A44A" stroke-width="0.9" opacity="0.16"/>
-        </pattern>
-      </defs>
-      <rect width="100%" height="100%" fill="url(#najdi)"/>
-    </svg>
-  </div>
-
-  <div class="wrap hero-grid" id="top">
-    <div>
-      <div class="kicker" data-ar="مهندس برمجيات · مكة المكرمة">Software Engineer · Makkah, Saudi Arabia</div>
-      <h1 class="hero-name" data-ar="أحمد كمال<br>ال<span class='gold'>شريف</span>">Ahmed Kamal<br>Al<span class="gold">shareef</span></h1>
-      <p class="hero-role" data-ar="تطبيقات وأنظمة بيانات · ذكاء اصطناعي تطبيقي">Applications &amp; Data Systems · Applied AI</p>
-      <p class="hero-sub" data-ar="خريج علوم حاسب من جامعة أم القرى. أبني تطبيقات وأنظمة بيانات بـ Flutter و React و TypeScript و Node.js و SQL — والذكاء الاصطناعي يدخل فقط حين يضيف قيمة حقيقية، لا كزينة.">Computer Science graduate from Umm Al-Qura University. I build applications and data systems with Flutter, React, TypeScript, Node.js and SQL — and bring AI in only where it earns its place.</p>
-
-      <div class="hero-cta">
-        <a class="btn btn-solid" href="#projects" data-ar="شوف المشاريع">View work</a>
-        <a class="btn btn-ghost" href="mailto:alshareef12k@gmail.com" data-ar="تواصل معي">Get in touch</a>
-      </div>
-
-      <div class="status">
-        <i></i>
-        <span data-ar="متاح لوظائف هندسة برمجيات · بكالوريوس علوم حاسب، أغسطس ٢٠٢٦">Open to software engineering roles · BSc Computer Science, Aug 2026</span>
-      </div>
+  <div class="wrap" id="top">
+    <div class="hero-meta mono">
+      <span data-ar="مكة المكرمة، السعودية">Makkah, Saudi Arabia</span>
+      <span>21.3891° N, 39.8579° E</span>
+      <span data-ar="متاح للتوظيف">Available for work</span>
     </div>
 
-    <div class="seal" aria-hidden="true">
-      <svg viewBox="0 0 400 400">
-        <g class="rot-slow" fill="none" stroke="#C8A44A">
-          <circle cx="200" cy="200" r="176" stroke-opacity="0.28"/>
-          <path d="M200 24 L376 200 L200 376 L24 200Z" stroke-opacity="0.5" stroke-width="1.4"/>
-          <path d="M76 76 H324 V324 H76 Z" stroke-opacity="0.3"/>
-        </g>
-        <g class="rot-back" fill="none" stroke="#C8A44A">
-          <path d="M200 60 L340 200 L200 340 L60 200Z" stroke-opacity="0.45" stroke-width="1.2"/>
-          <path d="M108 108 H292 V292 H108 Z" stroke-opacity="0.35" stroke-width="1.2"/>
-          <circle cx="200" cy="200" r="118" stroke-opacity="0.22"/>
-        </g>
-        <g fill="none" stroke="#E3CE96" stroke-width="1.6">
-          <path d="M200 128 L272 200 L200 272 L128 200Z"/>
-          <path d="M200 158 L242 200 L200 242 L158 200Z" fill="#C8A44A" fill-opacity="0.22"/>
-        </g>
-        <circle cx="200" cy="200" r="7" fill="#C8A44A"/>
-      </svg>
+    <h1 class="hero-name">Ahmed<br><span class="out">Alshareef</span></h1>
+
+    <div class="hero-line"></div>
+
+    <div class="hero-cols">
+      <div>
+        <p class="mono" style="color:var(--dim2)" data-ar="مهندس برمجيات — تطبيقات وأنظمة بيانات">Software Engineer — Applications &amp; Data Systems</p>
+        <p class="hero-sub" style="margin-top:14px" data-ar="خريج علوم حاسب من جامعة أم القرى. أبني تطبيقات وأنظمة بيانات بـ Flutter و React و TypeScript و Node.js و SQL — والذكاء الاصطناعي يدخل فقط حين يضيف قيمة حقيقية، لا كزينة.">Computer Science graduate from Umm Al-Qura University. I build applications and data systems with Flutter, React, TypeScript, Node.js and SQL — and bring AI in only where it earns its place.</p>
+        <div class="status mono"><i></i><span data-ar="بكالوريوس علوم حاسب · أغسطس ٢٠٢٦">BSc Computer Science · Aug 2026</span></div>
+      </div>
+      <div>
+        <div class="hero-cta">
+          <a class="btn btn-solid" href="#projects" data-ar="شوف المشاريع">View work</a>
+          <a class="btn btn-ghost" href="mailto:alshareef12k@gmail.com" data-ar="تواصل معي">Get in touch</a>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
-<div class="strip">
-  <div class="strip-track" id="strip"></div>
+<div class="wrap">
+  <div class="readout mono rv">
+    <div><div class="val" id="stat-repos">9</div><div class="lbl" data-ar="مستودع عام">Public repos</div></div>
+    <div><div class="val" id="stat-langs">6</div><div class="lbl" data-ar="لغة برمجة">Languages</div></div>
+    <div><div class="val">2</div><div class="lbl" data-ar="سنة خبرة عملية">Years working</div></div>
+    <div><div class="val">600</div><div class="lbl" data-ar="ساعة تدريب تعاوني">Co-op training hours</div></div>
+  </div>
 </div>
 
 <!-- ============================================================ WORK -->
 <section id="work">
   <div class="wrap">
-    <div class="kicker rv" data-ar="الخبرة">Experience</div>
-    <h2 class="h2 rv" data-ar="أين اشتغلت">Where I have worked</h2>
+    <div class="sec-head rv">
+      <span class="mono idx">01</span>
+      <h2 class="h2" data-ar="الخبرة">Experience</h2>
+    </div>
 
-    <div class="exp">
-      <div class="exp-item rv">
-        <div class="exp-when" data-ar="مارس ٢٠٢٥ — الآن">Mar 2025 — Present</div>
+    <div class="rows">
+      <div class="row-item rv">
+        <div class="when mono" data-ar="مارس ٢٠٢٥ — الآن">Mar 2025 — Present</div>
         <div>
           <h3 data-ar="فني دعم قواعد بيانات">Database Support Technician</h3>
           <p class="where" data-ar="مؤسسة صفا الريف للحدادة · مكة المكرمة">Safa Al Reef Blacksmithing Establishment · Makkah</p>
           <ul>
-            <li data-ar="مراجعة وتحديث سجلات العمل، ومعالجة مشاكل إدخال البيانات والصلاحيات، وإعداد التقارير الدورية للاستخدام اليومي.">Review and update business records, resolve data-entry and access issues, and prepare recurring reports for daily use.</li>
+            <li data-ar="مراجعة وتحديث سجلات العمل، ومعالجة مشاكل إدخال البيانات والصلاحيات، وإعداد التقارير الدورية.">Review and update business records, resolve data-entry and access issues, and prepare recurring reports for daily use.</li>
             <li data-ar="توثيق المشاكل المتكررة والمساعدة في التحديثات الروتينية والنسخ الاحتياطي.">Document recurring issues and assist with routine updates and backups.</li>
           </ul>
         </div>
       </div>
 
-      <div class="exp-item rv">
-        <div class="exp-when" data-ar="مارس — يونيو ٢٠٢٥">Mar — Jun 2025</div>
+      <div class="row-item rv">
+        <div class="when mono" data-ar="مارس — يونيو ٢٠٢٥">Mar — Jun 2025</div>
         <div>
           <h3 data-ar="متدرب تعاوني في تقنية المعلومات — ٦٠٠ ساعة">IT Cooperative Trainee — 600 hours</h3>
-          <p class="where" data-ar="عمادة التقنية والتطوير · جامعة أم القرى · مكة المكرمة">Deanship of Technology and Development · Umm Al-Qura University · Makkah</p>
+          <p class="where" data-ar="عمادة التقنية والتطوير · جامعة أم القرى">Deanship of Technology and Development · Umm Al-Qura University</p>
           <ul>
             <li data-ar="دعم المستخدمين ومعالجة أعطال تقنية المعلومات اليومية.">Handled user support and routine IT troubleshooting.</li>
             <li data-ar="المساهمة في تطوير ونشر الخدمات الرقمية الداخلية.">Assisted internal digital-service development and deployment tasks.</li>
@@ -580,8 +389,8 @@ footer {
         </div>
       </div>
 
-      <div class="exp-item rv">
-        <div class="exp-when" data-ar="تخرّج ٢٣ أغسطس ٢٠٢٦">Graduated 23 Aug 2026</div>
+      <div class="row-item rv">
+        <div class="when mono" data-ar="تخرّج ٢٣ أغسطس ٢٠٢٦">Graduated 23 Aug 2026</div>
         <div>
           <h3 data-ar="بكالوريوس علوم حاسب">BSc, Computer Science</h3>
           <p class="where" data-ar="جامعة أم القرى · مكة المكرمة">Umm Al-Qura University · Makkah</p>
@@ -591,122 +400,142 @@ footer {
   </div>
 </section>
 
-<div class="pattern-band" aria-hidden="true"></div>
-
 <!-- ======================================================== PROJECTS -->
 <section id="projects">
   <div class="wrap">
-    <div class="kicker rv" data-ar="المشاريع">Selected work</div>
-    <h2 class="h2 rv" data-ar="ما بنيته">What I have built</h2>
+    <div class="sec-head rv">
+      <span class="mono idx">02</span>
+      <h2 class="h2" data-ar="المشاريع">Selected work</h2>
+    </div>
     <p class="lede rv" data-ar="أغلبها برمجيات عربية أولًا للسوق السعودي — إرشاد الحاج، صيانة العقار، التغذية، والقرار المالي.">Mostly Arabic-first software for the Saudi market — pilgrim guidance, property maintenance, nutrition and personal finance.</p>
 
-    <div class="proj-grid">
+    <div class="projects">
 
       <a class="proj rv" href="https://github.com/whyKaiser/Dhakker" target="_blank" rel="noreferrer">
-        <div class="no">01</div>
-        <h3 data-ar="ذاكر — رفيق الحج والعمرة">Dhakker — Hajj &amp; Umrah Companion</h3>
-        <p data-ar="مشروع التخرّج. تطبيق عربي أولًا يتتبّع أشواط الطواف والسعي تلقائيًا عبر GPS ودمج الحساسات، مع مساعد صوتي. المفاتيح تمرّ عبر Cloudflare Worker ولا تُحزم داخل التطبيق. سجّل الاختبار دقة موقع تتجاوز ٩٥٪.">Graduation project. Arabic-first app that auto-counts Tawaf and Sa'i circuits through GPS and sensor fusion, with a voice assistant. API keys are proxied through a Cloudflare Worker, never bundled client-side. Testing recorded over 95% location accuracy.</p>
-        <div class="tags"><span class="tag">Flutter</span><span class="tag">Firebase</span><span class="tag">Cloudflare Workers</span></div>
-        <div class="go" data-ar="المستودع ←">Repository →</div>
+        <div class="p-no">01</div>
+        <div>
+          <div class="p-title" data-ar="ذاكر — رفيق الحج والعمرة">Dhakker — Hajj &amp; Umrah Companion</div>
+          <div class="p-stack">FLUTTER · FIREBASE · CLOUDFLARE WORKERS</div>
+        </div>
+        <div class="p-desc" data-ar="مشروع التخرّج. يتتبّع أشواط الطواف والسعي تلقائيًا عبر GPS ودمج الحساسات، مع مساعد صوتي. المفاتيح تمرّ عبر Cloudflare Worker ولا تُحزم داخل التطبيق. سجّل الاختبار دقة موقع تتجاوز ٩٥٪.">Graduation project. Auto-counts Tawaf and Sa'i circuits through GPS and sensor fusion, with a voice assistant. API keys proxied through a Cloudflare Worker, never bundled client-side. Testing recorded over 95% location accuracy.</div>
+        <div class="p-go" data-ar="المستودع ↗">REPO ↗</div>
       </a>
 
       <a class="proj rv" href="https://github.com/whyKaiser/Mirfaq-Maintenance" target="_blank" rel="noreferrer">
-        <div class="no">02</div>
-        <h3 data-ar="مِرفق — منصة صيانة العقارات">Mirfaq — Property Maintenance Platform</h3>
-        <p data-ar="منصة عربية تربط مدير العقار والساكن والفني عبر دورة البلاغ كاملة: إنشاء، إسناد، إنجاز، وتقارير — على نماذج بيانات علائقية مع صلاحيات حسب الدور واختبارات آلية.">Arabic platform connecting property managers, residents and technicians across the full request lifecycle: creation, assignment, completion and reporting — on relational data models with role-based access and automated tests.</p>
-        <div class="tags"><span class="tag">React</span><span class="tag">TypeScript</span><span class="tag">Prisma</span><span class="tag">PostgreSQL</span></div>
-        <div class="go" data-ar="المستودع ←">Repository →</div>
+        <div class="p-no">02</div>
+        <div>
+          <div class="p-title" data-ar="مِرفق — منصة صيانة العقارات">Mirfaq — Property Maintenance Platform</div>
+          <div class="p-stack">REACT · TYPESCRIPT · PRISMA · POSTGRESQL</div>
+        </div>
+        <div class="p-desc" data-ar="منصة عربية تربط مدير العقار والساكن والفني عبر دورة البلاغ كاملة: إنشاء، إسناد، إنجاز، وتقارير — على نماذج بيانات علائقية مع صلاحيات حسب الدور واختبارات آلية.">Connects property managers, residents and technicians across the full request lifecycle: creation, assignment, completion and reporting — on relational data models with role-based access and automated tests.</div>
+        <div class="p-go" data-ar="المستودع ↗">REPO ↗</div>
       </a>
 
       <a class="proj rv" href="https://github.com/whyKaiser/waqfa" target="_blank" rel="noreferrer">
-        <div class="no">03</div>
-        <h3 data-ar="وقفة — أداة قرار الشراء">Waqfa — Purchase Decision Tool</h3>
-        <p data-ar="بُني في هاكاثون أمد ٢٠٢٦. يحسب التدفّق النقدي ٩٠ يومًا قادمة من الدخل والمصروف ليُظهر أثر القسط قبل الالتزام به. الحساب حتمي، والذكاء الاصطناعي يشرح النتيجة فقط ولا يولّد أي رقم.">Built at Amad Hackathon 2026. Runs a 90-day cash-flow calculation from income and expense inputs to show what a new instalment does before you commit. The calculation is deterministic; the AI only explains the result and never produces a number.</p>
-        <div class="tags"><span class="tag">Flutter</span><span class="tag">Dart</span><span class="tag">Groq API</span></div>
-        <div class="go" data-ar="المستودع ←">Repository →</div>
+        <div class="p-no">03</div>
+        <div>
+          <div class="p-title" data-ar="وقفة — أداة قرار الشراء">Waqfa — Purchase Decision Tool</div>
+          <div class="p-stack">FLUTTER · DART · GROQ API</div>
+        </div>
+        <div class="p-desc" data-ar="بُني في هاكاثون أمد ٢٠٢٦. يحسب التدفّق النقدي ٩٠ يومًا قادمة من الدخل والمصروف ليُظهر أثر القسط قبل الالتزام. الحساب حتمي، والذكاء الاصطناعي يشرح النتيجة فقط ولا يولّد أي رقم.">Built at Amad Hackathon 2026. Runs a 90-day cash-flow calculation from income and expense inputs to show what a new instalment does before you commit. The calculation is deterministic; the AI only explains it and never produces a number.</div>
+        <div class="p-go" data-ar="المستودع ↗">REPO ↗</div>
       </a>
 
       <a class="proj rv" href="https://github.com/whyKaiser/zad" target="_blank" rel="noreferrer">
-        <div class="no">04</div>
-        <h3 data-ar="زاد — تتبّع تغذية خليجي">Zad — Gulf-First Nutrition Tracker</h3>
-        <p data-ar="تتبّع سعرات ولياقة مبني للمستخدم الخليجي: قاعدة أطباق محلية موثّقة بدل التخمين، واجهة عربية RTL، والذكاء الاصطناعي بديل موسوم بوضوح لا مصدر الحقيقة.">Calorie and fitness tracking built for the Gulf user: a verified local dish database instead of guesswork, an Arabic-first RTL interface, and AI as a clearly labelled fallback rather than the source of truth.</p>
-        <div class="tags"><span class="tag">Flutter</span><span class="tag">Firebase</span><span class="tag">Firestore</span></div>
-        <div class="go" data-ar="المستودع ←">Repository →</div>
+        <div class="p-no">04</div>
+        <div>
+          <div class="p-title" data-ar="زاد — تتبّع تغذية خليجي">Zad — Gulf-First Nutrition Tracker</div>
+          <div class="p-stack">FLUTTER · FIREBASE · FIRESTORE</div>
+        </div>
+        <div class="p-desc" data-ar="تتبّع سعرات ولياقة مبني للمستخدم الخليجي: قاعدة أطباق محلية موثّقة بدل التخمين، واجهة عربية RTL، والذكاء الاصطناعي بديل موسوم بوضوح لا مصدر الحقيقة.">Calorie and fitness tracking built for the Gulf user: a verified local dish database instead of guesswork, an Arabic-first RTL interface, and AI as a clearly labelled fallback rather than the source of truth.</div>
+        <div class="p-go" data-ar="المستودع ↗">REPO ↗</div>
       </a>
 
       <a class="proj rv" href="https://our-ai-app.songokualshareef.workers.dev/" target="_blank" rel="noreferrer">
-        <div class="no">05</div>
-        <h3 data-ar="سيرا — مساحة ذكاء اصطناعي ثنائية اللغة">Sera — Bilingual AI Workspace</h3>
-        <p data-ar="مساحة عربية/إنجليزية تعمل بالكامل على حافة Cloudflare: Workers AI للاستدلال، وD1 للتخزين، وSSE لبثّ الردود — بلا خادم يحتاج صيانة.">An Arabic/English workspace running entirely on Cloudflare's edge: Workers AI for inference, D1 for storage and SSE for streamed responses — with no server to keep alive.</p>
-        <div class="tags"><span class="tag">Workers AI</span><span class="tag">D1</span><span class="tag">SSE</span><span class="tag live" data-ar="مباشر">Live</span></div>
-        <div class="go" data-ar="افتح ←">Open →</div>
+        <div class="p-no">05</div>
+        <div>
+          <div class="p-title" data-ar="سيرا — مساحة ذكاء اصطناعي ثنائية اللغة">Sera — Bilingual AI Workspace</div>
+          <div class="p-stack">WORKERS AI · D1 · SSE</div>
+        </div>
+        <div class="p-desc" data-ar="مساحة عربية/إنجليزية تعمل بالكامل على حافة Cloudflare: Workers AI للاستدلال، وD1 للتخزين، وSSE لبثّ الردود — بلا خادم يحتاج صيانة.">Runs entirely on Cloudflare's edge: Workers AI for inference, D1 for storage and SSE for streamed responses — with no server to keep alive.</div>
+        <div class="p-go" data-ar="مباشر ↗">LIVE ↗</div>
       </a>
 
       <a class="proj rv" href="https://github.com/whyKaiser/rent-freeze-checker" target="_blank" rel="noreferrer">
-        <div class="no">06</div>
-        <h3 data-ar="فاحص تثبيت الإيجار">Rent Freeze Checker</h3>
-        <p data-ar="أداة استرشادية مجانية تفحص هل زيادة الإيجار أو إشعار الإخلاء في الرياض يخالف قرار التثبيت. تعمل بالكامل في المتصفح ولا تغادر أي بيانات جهاز المستخدم، والحكم قائم على قواعد موثّقة لا على نموذج لغوي.">A free guidance tool that checks whether a rent increase or eviction notice in Riyadh conflicts with the rent-freeze decision. Fully client-side — no data leaves the device — with rule-based, source-cited verdicts and no LLM in the decision path.</p>
-        <div class="tags"><span class="tag">React</span><span class="tag">TypeScript</span><span class="tag">Vite</span></div>
-        <div class="go" data-ar="المستودع ←">Repository →</div>
+        <div class="p-no">06</div>
+        <div>
+          <div class="p-title" data-ar="فاحص تثبيت الإيجار">Rent Freeze Checker</div>
+          <div class="p-stack">REACT · TYPESCRIPT · VITE</div>
+        </div>
+        <div class="p-desc" data-ar="أداة استرشادية تفحص هل زيادة الإيجار أو إشعار الإخلاء في الرياض يخالف قرار التثبيت. تعمل بالكامل في المتصفح ولا تغادر أي بيانات الجهاز، والحكم قائم على قواعد موثّقة لا على نموذج لغوي.">Checks whether a rent increase or eviction notice in Riyadh conflicts with the rent-freeze decision. Fully client-side — no data leaves the device — with rule-based, source-cited verdicts and no LLM in the decision path.</div>
+        <div class="p-go" data-ar="المستودع ↗">REPO ↗</div>
       </a>
 
       <a class="proj rv" href="https://whykaiser.github.io/nexaforge-3d/" target="_blank" rel="noreferrer">
-        <div class="no">07</div>
-        <h3 data-ar="نيكسافورج ٣د">NexaForge 3D</h3>
-        <p data-ar="منصة عربية أولًا تحوّل الصور ثنائية الأبعاد إلى أصول ثلاثية الأبعاد جاهزة للألعاب، مع عارض داخل المتصفح وتبديل كامل بين العربية والإنجليزية. لا أسرار مضمّنة — المستخدم يدخل عنوان الخادم ورمزه لكل جلسة.">An Arabic-first platform that turns 2D images into game-ready 3D assets, with an in-browser viewer and a full Arabic/English toggle. No secrets bundled — the user enters the processing server URL and token per session.</p>
-        <div class="tags"><span class="tag">Three.js</span><span class="tag">model-viewer</span><span class="tag live" data-ar="مباشر">Live</span></div>
-        <div class="go" data-ar="افتح ←">Open →</div>
+        <div class="p-no">07</div>
+        <div>
+          <div class="p-title" data-ar="نيكسافورج ٣د">NexaForge 3D</div>
+          <div class="p-stack">THREE.JS · MODEL-VIEWER · GSAP</div>
+        </div>
+        <div class="p-desc" data-ar="منصة عربية أولًا تحوّل الصور ثنائية الأبعاد إلى أصول ثلاثية الأبعاد جاهزة للألعاب، مع عارض داخل المتصفح وتبديل كامل بين العربية والإنجليزية. لا أسرار مضمّنة.">Turns 2D images into game-ready 3D assets, with an in-browser viewer and a full Arabic/English toggle. No secrets bundled — the server URL and token are entered per session.</div>
+        <div class="p-go" data-ar="مباشر ↗">LIVE ↗</div>
       </a>
 
-      <div class="proj rv">
-        <div class="no">08</div>
-        <h3 data-ar="رهان إرم — روغلايك ثلاثي الأبعاد">Wager of Iram — 3D Action Roguelike</h3>
-        <p data-ar="لعبة أكشن روغلايك مستوحاة من Sekiro، مبنية بمحرك Godot مع إضافة وكيل ذكاء اصطناعي داخل المحرر. الفكرة المحورية: الكِبر مقابل التواضع — النهاية الحقيقية أن ترمي السيف، لا أن تنتصر به.">A Sekiro-inspired action roguelike built in Godot with a custom in-editor AI agent addon. Central theme: pride against humility — the true ending is throwing the sword away, not winning the fight.</p>
-        <div class="tags"><span class="tag">Godot</span><span class="tag">GDScript</span><span class="tag" data-ar="قيد التطوير">In development</span></div>
+      <div class="proj static rv">
+        <div class="p-no">08</div>
+        <div>
+          <div class="p-title" data-ar="رهان إرم — روغلايك ثلاثي الأبعاد">Wager of Iram — 3D Action Roguelike</div>
+          <div class="p-stack">GODOT · GDSCRIPT</div>
+        </div>
+        <div class="p-desc" data-ar="لعبة أكشن روغلايك مستوحاة من Sekiro بمحرك Godot مع إضافة وكيل ذكاء اصطناعي داخل المحرر. الفكرة المحورية: الكِبر مقابل التواضع — النهاية الحقيقية أن ترمي السيف لا أن تنتصر به.">A Sekiro-inspired action roguelike in Godot with a custom in-editor AI agent addon. Central theme: pride against humility — the true ending is throwing the sword away, not winning the fight.</div>
+        <div class="p-go" data-ar="قيد التطوير">IN DEV</div>
       </div>
 
-      <div class="proj rv">
-        <div class="no">09</div>
-        <h3 data-ar="لعبة رعب السينما">Cinema Horror Game</h3>
-        <p data-ar="لعبة رعب تعاونية متعددة اللاعبين بمحرك Unity. اللاعبون موظفو سينما ليلًا، يحملون بكرات الأفلام ويلصقونها لإبقاء الوحوش داخل الشاشة بينما تتعطّل كهرباء العارض.">A co-op multiplayer horror game in Unity. Players work a cinema at night, carrying and splicing film reels to keep the monsters on-screen while the projector's power keeps failing.</p>
-        <div class="tags"><span class="tag">Unity</span><span class="tag">C#</span><span class="tag" data-ar="قيد التطوير">In development</span></div>
+      <div class="proj static rv">
+        <div class="p-no">09</div>
+        <div>
+          <div class="p-title" data-ar="لعبة رعب السينما">Cinema Horror Game</div>
+          <div class="p-stack">UNITY · C# · NETCODE</div>
+        </div>
+        <div class="p-desc" data-ar="لعبة رعب تعاونية متعددة اللاعبين بمحرك Unity. اللاعبون موظفو سينما ليلًا، يحملون بكرات الأفلام ويلصقونها لإبقاء الوحوش داخل الشاشة بينما تتعطّل كهرباء العارض.">A co-op multiplayer horror game in Unity. Players work a cinema at night, carrying and splicing film reels to keep the monsters on-screen while the projector's power keeps failing.</div>
+        <div class="p-go" data-ar="قيد التطوير">IN DEV</div>
       </div>
 
     </div>
   </div>
 </section>
 
-<div class="pattern-band flip" aria-hidden="true"></div>
-
 <!-- ========================================================== SKILLS -->
-<section id="skills" class="on-green">
+<section id="skills">
   <div class="wrap">
-    <div class="kicker rv" data-ar="المهارات">Capabilities</div>
-    <h2 class="h2 rv" data-ar="ما أشتغل به">What I work with</h2>
+    <div class="sec-head rv">
+      <span class="mono idx">03</span>
+      <h2 class="h2" data-ar="المهارات">Capabilities</h2>
+    </div>
 
     <div class="skill-cols">
       <div class="skill-col rv">
-        <h4 data-ar="تطوير التطبيقات">Application development</h4>
-        <div class="skill-row"><span>Flutter / Dart</span><span class="pips"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></div>
-        <div class="skill-row"><span>React / TypeScript</span><span class="pips"><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></div>
-        <div class="skill-row"><span>JavaScript / HTML / CSS</span><span class="pips"><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></div>
-        <div class="skill-row"><span>Java / C++</span><span class="pips"><i class="on"></i><i class="on"></i><i></i><i></i></span></div>
+        <h4 class="mono" data-ar="تطوير التطبيقات">Application development</h4>
+        <div class="skill-row"><span>Flutter / Dart</span><span class="meter">████</span></div>
+        <div class="skill-row"><span>React / TypeScript</span><span class="meter">███<em>█</em></span></div>
+        <div class="skill-row"><span>JavaScript / HTML / CSS</span><span class="meter">███<em>█</em></span></div>
+        <div class="skill-row"><span>Java / C++</span><span class="meter">██<em>██</em></span></div>
       </div>
 
       <div class="skill-col rv">
-        <h4 data-ar="البيانات والخلفية">Data &amp; backend</h4>
-        <div class="skill-row"><span>Firebase / Firestore</span><span class="pips"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></div>
-        <div class="skill-row"><span>SQL / PostgreSQL</span><span class="pips"><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></div>
-        <div class="skill-row"><span>Node.js / Prisma / SQLite</span><span class="pips"><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></div>
-        <div class="skill-row"><span data-ar="واجهات REST ونمذجة البيانات">REST APIs / data modelling</span><span class="pips"><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></div>
+        <h4 class="mono" data-ar="البيانات والخلفية">Data &amp; backend</h4>
+        <div class="skill-row"><span>Firebase / Firestore</span><span class="meter">████</span></div>
+        <div class="skill-row"><span>SQL / PostgreSQL</span><span class="meter">███<em>█</em></span></div>
+        <div class="skill-row"><span>Node.js / Prisma / SQLite</span><span class="meter">███<em>█</em></span></div>
+        <div class="skill-row"><span data-ar="واجهات REST ونمذجة البيانات">REST APIs / data modelling</span><span class="meter">███<em>█</em></span></div>
       </div>
 
       <div class="skill-col rv">
-        <h4 data-ar="الهندسة والذكاء الاصطناعي">Engineering &amp; AI</h4>
-        <div class="skill-row"><span data-ar="المصادقة وصلاحيات الأدوار">Authentication / RBAC</span><span class="pips"><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></div>
-        <div class="skill-row"><span data-ar="ذكاء اصطناعي تطبيقي (Groq · Workers AI)">Applied AI (Groq · Workers AI)</span><span class="pips"><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></div>
-        <div class="skill-row"><span>Git / GitHub Actions</span><span class="pips"><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></div>
-        <div class="skill-row"><span data-ar="الاختبارات الآلية والتوثيق">Automated testing / docs</span><span class="pips"><i class="on"></i><i class="on"></i><i></i><i></i></span></div>
+        <h4 class="mono" data-ar="الهندسة والذكاء الاصطناعي">Engineering &amp; AI</h4>
+        <div class="skill-row"><span data-ar="المصادقة وصلاحيات الأدوار">Authentication / RBAC</span><span class="meter">███<em>█</em></span></div>
+        <div class="skill-row"><span data-ar="ذكاء اصطناعي تطبيقي (Groq · Workers AI)">Applied AI (Groq · Workers AI)</span><span class="meter">███<em>█</em></span></div>
+        <div class="skill-row"><span>Git / GitHub Actions</span><span class="meter">███<em>█</em></span></div>
+        <div class="skill-row"><span data-ar="الاختبارات الآلية والتوثيق">Automated testing / docs</span><span class="meter">██<em>██</em></span></div>
       </div>
     </div>
   </div>
@@ -715,28 +544,30 @@ footer {
 <!-- =========================================================== CERTS -->
 <section id="certs">
   <div class="wrap">
-    <div class="kicker rv" data-ar="الشهادات">Credentials</div>
-    <h2 class="h2 rv" data-ar="الشهادات والدورات">Certifications</h2>
+    <div class="sec-head rv">
+      <span class="mono idx">04</span>
+      <h2 class="h2" data-ar="الشهادات">Credentials</h2>
+    </div>
 
     <div class="certs">
       <div class="cert rv">
-        <div class="mark">◈ SDAIA</div>
-        <h4 data-ar="الهيئة السعودية للبيانات والذكاء الاصطناعي (٢٠٢٥)">Saudi Data &amp; AI Authority (2025)</h4>
+        <div class="tag mono">SDAIA · 2025</div>
+        <h4 data-ar="الهيئة السعودية للبيانات والذكاء الاصطناعي">Saudi Data &amp; AI Authority</h4>
         <p data-ar="أساسيات الذكاء الاصطناعي · مفاهيم الذكاء الاصطناعي وتطبيقاته المتقدمة">AI Fundamentals · AI Concepts and Advanced Applications</p>
       </div>
       <div class="cert rv">
-        <div class="mark">◈ CISCO</div>
+        <div class="tag mono">CISCO</div>
         <h4 data-ar="أكاديمية سيسكو للشبكات">Cisco Networking Academy</h4>
         <p data-ar="خمس شهادات: مقدمة في علم البيانات · مسار فني الشبكات · دعم وأمن الشبكات · أساسيات الشبكات · مقدمة في الأمن السيبراني">Five certifications: Introduction to Data Science · Network Technician Career Path · Network Support and Security · Networking Basics · Introduction to Cybersecurity</p>
       </div>
       <div class="cert rv">
-        <div class="mark">◈ DOROOB</div>
-        <h4 data-ar="دروب — أكاديمية stc (٢٠٢٥)">Doroob — stc Academy (2025)</h4>
+        <div class="tag mono">DOROOB · 2025</div>
+        <h4 data-ar="دروب — أكاديمية stc">Doroob — stc Academy</h4>
         <p data-ar="الذكاء الاصطناعي وتحليل البيانات في مستقبل سوق العمل">AI and Data Analysis in the Future of the Labor Market</p>
       </div>
       <div class="cert rv">
-        <div class="mark">◈ AMAD 2026</div>
-        <h4 data-ar="هاكاثون أمد ٢٠٢٦">Amad Hackathon 2026</h4>
+        <div class="tag mono">AMAD · 2026</div>
+        <h4 data-ar="هاكاثون أمد">Amad Hackathon</h4>
         <p data-ar="الذكاء الاصطناعي التوليدي للتقنية المالية — بنك الإنماء وأكاديمية طويق، الرياض">Generative AI for FinTech — Inma Bank &amp; Tuwaiq Academy, Riyadh</p>
       </div>
     </div>
@@ -744,120 +575,226 @@ footer {
 </section>
 
 <!-- ========================================================= CONTACT -->
-<section id="contact" class="on-green">
-  <div class="lattice" aria-hidden="true">
-    <svg width="100%" height="100%" preserveAspectRatio="none"><rect width="100%" height="100%" fill="url(#najdi)"/></svg>
-  </div>
-  <div class="wrap" style="position:relative;z-index:2">
-    <div class="kicker rv" data-ar="تواصل">Contact</div>
-    <h2 class="h2 rv" data-ar="نبني شيئًا معًا">Let us build something</h2>
+<section id="contact">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <span class="mono idx">05</span>
+      <h2 class="h2" data-ar="تواصل">Contact</h2>
+    </div>
     <p class="lede rv" data-ar="متاح لوظائف هندسة برمجيات ودعم التطبيقات والبيانات، وللعمل الحر على المنتجات.">Open to junior software engineering roles, applications and data support, and freelance product work.</p>
 
     <div class="contact-list rv">
-      <a class="contact-row" href="mailto:alshareef12k@gmail.com"><span data-ar="البريد">Email</span><span>alshareef12k@gmail.com</span></a>
-      <a class="contact-row" href="https://www.linkedin.com/in/ahmed-alshareef-7b882b417" target="_blank" rel="noreferrer"><span>LinkedIn</span><span>ahmed-alshareef</span></a>
-      <a class="contact-row" href="https://github.com/whyKaiser" target="_blank" rel="noreferrer"><span>GitHub</span><span>whyKaiser</span></a>
-      <a class="contact-row" href="https://x.com/alshareef12k" target="_blank" rel="noreferrer"><span>X</span><span>@alshareef12k</span></a>
-      <a class="contact-row" href="tel:+966544964489"><span data-ar="الجوال">Phone</span><span dir="ltr">+966 54 496 4489</span></a>
+      <a class="contact-row" href="mailto:alshareef12k@gmail.com"><span class="k mono" data-ar="البريد">EMAIL</span><span dir="ltr">alshareef12k@gmail.com</span></a>
+      <a class="contact-row" href="https://www.linkedin.com/in/ahmed-alshareef-7b882b417" target="_blank" rel="noreferrer"><span class="k mono">LINKEDIN</span><span dir="ltr">ahmed-alshareef</span></a>
+      <a class="contact-row" href="https://github.com/whyKaiser" target="_blank" rel="noreferrer"><span class="k mono">GITHUB</span><span dir="ltr">whyKaiser</span></a>
+      <a class="contact-row" href="https://x.com/alshareef12k" target="_blank" rel="noreferrer"><span class="k mono">X</span><span dir="ltr">@alshareef12k</span></a>
+      <a class="contact-row" href="tel:+966544964489"><span class="k mono" data-ar="الجوال">PHONE</span><span dir="ltr">+966 54 496 4489</span></a>
     </div>
   </div>
 </section>
 
 <footer>
-  <div class="wrap foot-inner">
-    <span data-ar="أحمد كمال الشريف · مكة المكرمة، السعودية">Ahmed Kamal Alshareef · Makkah, Saudi Arabia</span>
-    <span data-ar="٢٠٢٦">2026</span>
+  <div class="wrap foot-inner mono">
+    <span data-ar="أحمد كمال الشريف · مكة المكرمة">Ahmed Kamal Alshareef · Makkah</span>
+    <span>2026</span>
   </div>
 </footer>
+
+</div><!-- /.page -->
 
 <script>
 (function () {
   "use strict";
 
-  // Reveals are progressive enhancement: without this class the content is
-  // simply visible, so a script failure never blanks the page.
-  document.documentElement.classList.add("js");
+  var root = document.documentElement;
+  // Reveals are progressive enhancement: without this class content is simply
+  // visible, so a script failure can never blank the page.
+  root.classList.add("js");
 
-  // ---------------------------------------------------------- marquee
-  var items = [
-    ["Umm Al-Qura University", "جامعة أم القرى"],
-    ["SDAIA", "سدايا"],
-    ["Cisco Networking Academy", "أكاديمية سيسكو"],
-    ["Doroob · stc Academy", "دروب · أكاديمية stc"],
-    ["Inma Bank", "بنك الإنماء"],
-    ["Tuwaiq Academy", "أكاديمية طويق"],
-    ["Amad Hackathon 2026", "هاكاثون أمد ٢٠٢٦"]
-  ];
-  var strip = document.getElementById("strip");
+  var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  function paintStrip(lang) {
-    var half = items.map(function (it) {
-      var s = document.createElement("span");
-      s.textContent = lang === "ar" ? it[1] : it[0];
-      return s;
-    });
-    strip.replaceChildren();
-    // two identical runs so the -50% keyframe loops seamlessly
-    half.forEach(function (n) { strip.appendChild(n); });
-    half.forEach(function (n) { strip.appendChild(n.cloneNode(true)); });
+  /* ------------------------------------------------------------ theme */
+  var themeBtn = document.getElementById("theme");
+
+  function setTheme(mode) {
+    root.setAttribute("data-theme", mode);
+    document.querySelector('meta[name="theme-color"]')
+      .setAttribute("content", mode === "light" ? "#FFFFFF" : "#000000");
+    themeBtn.textContent = mode === "light" ? "INVERT ●" : "INVERT ○";
+    try { localStorage.setItem("theme", mode); } catch (e) {}
+    if (window.__stars) window.__stars.recolor();
   }
 
-  // ------------------------------------------------- language switching
-  // Every translatable node carries its Arabic in data-ar; the English stays
-  // in the markup, so the page is complete and readable with JS disabled.
+  var savedTheme = null;
+  try { savedTheme = localStorage.getItem("theme"); } catch (e) {}
+  if (!savedTheme) {
+    savedTheme = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+  }
+
+  themeBtn.addEventListener("click", function () {
+    setTheme(root.getAttribute("data-theme") === "light" ? "dark" : "light");
+  });
+
+  /* --------------------------------------------------------- language */
   var nodes = Array.prototype.slice.call(document.querySelectorAll("[data-ar]"));
   nodes.forEach(function (n) { n.setAttribute("data-en", n.innerHTML); });
 
-  var btn = document.getElementById("lang");
-  var html = document.documentElement;
+  var langBtn = document.getElementById("lang");
 
   function setLang(lang) {
     var ar = lang === "ar";
-    html.lang = ar ? "ar" : "en";
-    html.dir = ar ? "rtl" : "ltr";
-    nodes.forEach(function (n) {
-      n.innerHTML = n.getAttribute(ar ? "data-ar" : "data-en");
-    });
-    btn.textContent = ar ? "EN" : "عربي";
-    btn.setAttribute("aria-label", ar ? "Switch to English" : "التبديل إلى العربية");
-    paintStrip(lang);
+    root.lang = ar ? "ar" : "en";
+    root.dir = ar ? "rtl" : "ltr";
+    nodes.forEach(function (n) { n.innerHTML = n.getAttribute(ar ? "data-ar" : "data-en"); });
+    langBtn.textContent = ar ? "EN" : "عربي";
+    langBtn.setAttribute("aria-label", ar ? "Switch to English" : "التبديل إلى العربية");
     try { localStorage.setItem("lang", lang); } catch (e) {}
   }
 
-  var saved = null;
-  try { saved = localStorage.getItem("lang"); } catch (e) {}
-  setLang(saved || ((navigator.language || "").slice(0, 2) === "ar" ? "ar" : "en"));
+  var savedLang = null;
+  try { savedLang = localStorage.getItem("lang"); } catch (e) {}
+  setLang(savedLang || ((navigator.language || "").slice(0, 2) === "ar" ? "ar" : "en"));
 
-  btn.addEventListener("click", function () {
-    setLang(html.dir === "rtl" ? "en" : "ar");
+  langBtn.addEventListener("click", function () {
+    setLang(root.dir === "rtl" ? "en" : "ar");
   });
 
-  // -------------------------------------------------------- reveals
+  /* ------------------------------------------------------------ stars
+     A star field drawn in the foreground colour, so inverting the theme
+     turns white stars on black into black stars on white. Three parallax
+     depths drift with the scroll; the brightest few breathe slowly.     */
+  var canvas = document.getElementById("stars");
+  var ctx = canvas.getContext("2d");
+  var stars = [];
+  var dpr = Math.min(window.devicePixelRatio || 1, 2);
+  var w = 0, h = 0, scrollY = 0, rgb = "255,255,255";
+
+  function readColor() {
+    var c = getComputedStyle(root).getPropertyValue("--fg").trim();
+    rgb = c.indexOf("#") === 0 && c.length >= 7
+      ? [parseInt(c.substr(1, 2), 16), parseInt(c.substr(3, 2), 16), parseInt(c.substr(5, 2), 16)].join(",")
+      : "255,255,255";
+  }
+
+  function build() {
+    w = window.innerWidth;
+    h = window.innerHeight;
+    canvas.width = w * dpr;
+    canvas.height = h * dpr;
+    canvas.style.width = w + "px";
+    canvas.style.height = h + "px";
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    var count = Math.round(Math.min(320, (w * h) / 5000));
+    stars = [];
+    for (var i = 0; i < count; i++) {
+      var depth = i % 3;                       // 0 far, 2 near
+      stars.push({
+        x: Math.random() * w,
+        y: Math.random() * (h * 2),            // extra height to parallax into
+        r: [0.6, 1.0, 1.5][depth] * (0.7 + Math.random() * 0.7),
+        a: [0.28, 0.46, 0.7][depth] * (0.6 + Math.random() * 0.5),
+        d: [0.06, 0.14, 0.26][depth],          // parallax factor
+        tw: Math.random() < 0.22,              // only a few twinkle
+        ph: Math.random() * Math.PI * 2
+      });
+    }
+  }
+
+  function draw(t) {
+    ctx.clearRect(0, 0, w, h);
+    for (var i = 0; i < stars.length; i++) {
+      var s = stars[i];
+      var y = s.y - scrollY * s.d;
+      y = ((y % (h * 2)) + h * 2) % (h * 2);   // wrap so the field never runs out
+      if (y > h + 4) continue;
+      var a = s.a;
+      if (s.tw && !reduced) a *= 0.55 + 0.45 * Math.sin(t / 1400 + s.ph);
+      ctx.globalAlpha = a;
+      ctx.fillStyle = "rgb(" + rgb + ")";
+      ctx.beginPath();
+      ctx.arc(s.x, y, s.r, 0, 6.2832);
+      ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+  }
+
+  var needsDraw = true;
+  function loop(t) {
+    if (needsDraw || !reduced) draw(t || 0);
+    needsDraw = false;
+    requestAnimationFrame(loop);
+  }
+
+  window.__stars = { recolor: function () { readColor(); needsDraw = true; } };
+
+  readColor();
+  build();
+  requestAnimationFrame(loop);
+
+  var rt;
+  window.addEventListener("resize", function () {
+    clearTimeout(rt);
+    rt = setTimeout(function () { build(); needsDraw = true; }, 150);
+  });
+
+  /* ------------------------------------------------- scroll + reveals */
+  var progress = document.getElementById("progress");
+  var ticking = false;
+
+  function onScroll() {
+    scrollY = window.scrollY || window.pageYOffset;
+    needsDraw = true;
+    var max = document.body.scrollHeight - window.innerHeight;
+    progress.style.width = (max > 0 ? (scrollY / max) * 100 : 0) + "%";
+    ticking = false;
+  }
+
+  window.addEventListener("scroll", function () {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(onScroll);
+  }, { passive: true });
+  onScroll();
+
   var targets = document.querySelectorAll(".rv");
   if (!("IntersectionObserver" in window)) {
-    targets.forEach(function (t) { t.classList.add("in"); });
-    return;
+    Array.prototype.forEach.call(targets, function (t) { t.classList.add("in"); });
+  } else {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        e.target.classList.add("in");
+        io.unobserve(e.target);
+      });
+    }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
+
+    Array.prototype.forEach.call(targets, function (t, i) {
+      t.style.transitionDelay = (i % 4) * 0.06 + "s";
+      io.observe(t);
+    });
+
+    // Safety net for embedded browsers that suppress the observer.
+    setTimeout(function () {
+      Array.prototype.forEach.call(targets, function (t) {
+        if (t.getBoundingClientRect().top < window.innerHeight * 1.5) t.classList.add("in");
+      });
+    }, 600);
   }
-  var io = new IntersectionObserver(function (entries) {
-    entries.forEach(function (e) {
-      if (!e.isIntersecting) return;
-      e.target.classList.add("in");
-      io.unobserve(e.target);
-    });
-  }, { threshold: 0.12, rootMargin: "0px 0px -60px 0px" });
 
-  targets.forEach(function (t, i) {
-    t.style.transitionDelay = (i % 4) * 0.07 + "s";
-    io.observe(t);
-  });
+  setTheme(savedTheme);
 
-  // Safety net: anything already near the viewport shows even if the observer
-  // never fires (some embedded/preview browsers suppress it).
-  setTimeout(function () {
-    targets.forEach(function (t) {
-      if (t.getBoundingClientRect().top < window.innerHeight * 1.5) t.classList.add("in");
-    });
-  }, 600);
+  /* ------------------------------------------- live numbers, best effort
+     The readout ships with correct static values; if the public GitHub API
+     answers, they are refreshed from it. A failure changes nothing.      */
+  fetch("https://api.github.com/users/whyKaiser/repos?per_page=100&type=owner")
+    .then(function (r) { return r.ok ? r.json() : Promise.reject(); })
+    .then(function (repos) {
+      // forks are not my work, so they are excluded here as they are everywhere else
+      var own = repos.filter(function (r) { return !r.fork; }).length;
+      if (own > 0) document.getElementById("stat-repos").textContent = own;
+    })
+    .catch(function () {});
 })();
 </script>
 
