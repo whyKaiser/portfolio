@@ -328,6 +328,36 @@ html[dir="rtl"] .wipe::before { transform-origin: 100% 50%; }
 .wipe:hover .when, .wipe:hover .k, .wipe:hover .p-stack,
 .wipe:hover .p-desc, .wipe:hover .p-no { opacity: 0.78; }
 
+/* ------------------------------------------------------- screenshots */
+.shots {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 4px;
+}
+.shots figure { margin: 0; }
+.shots img {
+  display: block;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  transition: transform 0.3s var(--ease), border-color 0.3s var(--ease);
+}
+.shots img:hover { transform: translateY(-3px); border-color: var(--accent); }
+.shots.wide img { width: min(100%, 420px); height: auto; }
+.shots.phone img { width: 148px; height: auto; }
+.shots figcaption {
+  font-family: var(--mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--dim2);
+  margin-top: 8px;
+  max-width: 148px;
+}
+html[dir="rtl"] .shots figcaption { letter-spacing: 0; text-transform: none; font-size: 0.72rem; }
+.shots.wide figcaption { max-width: 420px; }
+
 /* ------------------------------------------------------ case studies */
 .proj { grid-template-columns: 62px minmax(0, 1.05fr) minmax(0, 1.4fr) auto; }
 .p-head { min-width: 0; }
@@ -583,7 +613,10 @@ footer { border-top: 1px solid var(--line); padding: 24px 0; color: var(--dim2);
           <button class="p-toggle mono" type="button" aria-expanded="false" aria-controls="case-02" data-ar="التفاصيل">CASE</button>
           <a class="p-go" href="https://github.com/whyKaiser/Mirfaq-Maintenance" target="_blank" rel="noreferrer" data-ar="المستودع ↗">REPO ↗</a>
         </div>
-        <div class="p-case" id="case-02" hidden><div class="case-block"><h4 class="mono" data-ar="المشكلة">Problem</h4><p data-ar="بلاغ الصيانة بلا مالك واضح ولا سجل حالة يتحوّل إلى مكالمة، ثم إلى خلاف حول ما وُعد به.">A maintenance report with no clear owner and no status trail turns into a phone call, and then into an argument about what was promised.</p></div><div class="case-block"><h4 class="mono" data-ar="الطريقة">Approach</h4><p data-ar="نماذج بيانات علائقية في Prisma فوق PostgreSQL، وصلاحيات حسب الدور تفصل بين المدير والساكن والفني، وحالات صريحة للبلاغ من الإنشاء إلى الإسناد إلى الإنجاز.">Relational data models in Prisma over PostgreSQL, with role-based access separating manager, resident and technician, and explicit lifecycle states from creation through assignment to completion.</p></div><div class="case-block"><h4 class="mono" data-ar="النتيجة">Result</h4><p data-ar="الدورة كاملة تعمل في مكان واحد مع الإشعارات والتقارير، واختبارات آلية تغطي المسارات الأساسية.">The full lifecycle runs in one place with notifications and reporting, and automated tests cover the core workflows.</p></div></div>
+        <div class="p-case" id="case-02" hidden><div class="case-block"><h4 class="mono" data-ar="المشكلة">Problem</h4><p data-ar="بلاغ الصيانة بلا مالك واضح ولا سجل حالة يتحوّل إلى مكالمة، ثم إلى خلاف حول ما وُعد به.">A maintenance report with no clear owner and no status trail turns into a phone call, and then into an argument about what was promised.</p></div><div class="case-block"><h4 class="mono" data-ar="الطريقة">Approach</h4><p data-ar="نماذج بيانات علائقية في Prisma فوق PostgreSQL، وصلاحيات حسب الدور تفصل بين المدير والساكن والفني، وحالات صريحة للبلاغ من الإنشاء إلى الإسناد إلى الإنجاز.">Relational data models in Prisma over PostgreSQL, with role-based access separating manager, resident and technician, and explicit lifecycle states from creation through assignment to completion.</p></div><div class="case-block"><h4 class="mono" data-ar="النتيجة">Result</h4><p data-ar="الدورة كاملة تعمل في مكان واحد مع الإشعارات والتقارير، واختبارات آلية تغطي المسارات الأساسية.">The full lifecycle runs in one place with notifications and reporting, and automated tests cover the core workflows.</p></div><div class="shots wide">
+  <figure><img src="assets/shots/mirfaq-dashboard.png" alt="Mirfaq manager dashboard showing request counts and the latest reports" loading="lazy" width="713" height="446"><figcaption data-ar="لوحة تحكم المدير — عدّادات البلاغات وآخر البلاغات الواردة">Manager dashboard — request counters and the latest incoming reports</figcaption></figure>
+  <figure><img src="assets/shots/mirfaq-landing.png" alt="Mirfaq landing page" loading="lazy" width="713" height="446"><figcaption data-ar="الصفحة التعريفية للمنصة">Platform landing page</figcaption></figure>
+</div></div>
       </article>
 
       <article class="proj rv">
@@ -605,7 +638,12 @@ footer { border-top: 1px solid var(--line); padding: 24px 0; color: var(--dim2);
           <button class="p-toggle mono" type="button" aria-expanded="false" aria-controls="case-04" data-ar="التفاصيل">CASE</button>
           <a class="p-go" href="https://github.com/whyKaiser/zad" target="_blank" rel="noreferrer" data-ar="المستودع ↗">REPO ↗</a>
         </div>
-        <div class="p-case" id="case-04" hidden><div class="case-block"><h4 class="mono" data-ar="المشكلة">Problem</h4><p data-ar="تطبيقات التغذية تخمّن قيم الأطباق الخليجية، ورقم خاطئ يُعرض بثقة أسوأ من غياب الرقم.">Nutrition apps guess at Gulf dishes, and a wrong number typed with confidence is worse than no number at all.</p></div><div class="case-block"><h4 class="mono" data-ar="الطريقة">Approach</h4><p data-ar="قاعدة أطباق محلية موثّقة تجيب أولًا، والذكاء الاصطناعي بديل موسوم بوضوح لا مصدر حقيقة. واجهة عربية RTL، ودخول مجهول افتراضيًا حتى لا يعيق شيء أول استخدام.">A verified local dish database answers first; AI is a clearly labelled fallback, never the source of truth. Arabic-first RTL interface, anonymous auth by default so nothing blocks the first use.</p></div><div class="case-block"><h4 class="mono" data-ar="النتيجة">Result</h4><p data-ar="السلاسل والمراتب تُحسب من نشاط Firestore الحقيقي لا محاكاةً، فالتقدّم يعكس ما فعله المستخدم فعلًا.">Streaks and ranks are computed from real Firestore activity rather than simulated, so progress reflects what the user actually did.</p></div></div>
+        <div class="p-case" id="case-04" hidden><div class="case-block"><h4 class="mono" data-ar="المشكلة">Problem</h4><p data-ar="تطبيقات التغذية تخمّن قيم الأطباق الخليجية، ورقم خاطئ يُعرض بثقة أسوأ من غياب الرقم.">Nutrition apps guess at Gulf dishes, and a wrong number typed with confidence is worse than no number at all.</p></div><div class="case-block"><h4 class="mono" data-ar="الطريقة">Approach</h4><p data-ar="قاعدة أطباق محلية موثّقة تجيب أولًا، والذكاء الاصطناعي بديل موسوم بوضوح لا مصدر حقيقة. واجهة عربية RTL، ودخول مجهول افتراضيًا حتى لا يعيق شيء أول استخدام.">A verified local dish database answers first; AI is a clearly labelled fallback, never the source of truth. Arabic-first RTL interface, anonymous auth by default so nothing blocks the first use.</p></div><div class="case-block"><h4 class="mono" data-ar="النتيجة">Result</h4><p data-ar="السلاسل والمراتب تُحسب من نشاط Firestore الحقيقي لا محاكاةً، فالتقدّم يعكس ما فعله المستخدم فعلًا.">Streaks and ranks are computed from real Firestore activity rather than simulated, so progress reflects what the user actually did.</p></div><div class="shots phone">
+  <figure><img src="assets/shots/zad-home.png" alt="Zad home screen with the calorie ring and macro breakdown" loading="lazy" width="360" height="760"><figcaption data-ar="الرئيسية — السعرات المتبقية والماكروز">Home — remaining calories and macros</figcaption></figure>
+  <figure><img src="assets/shots/zad-analytics.png" alt="Zad analytics screen" loading="lazy" width="360" height="760"><figcaption data-ar="الإحصاءات — من نشاط Firestore الفعلي">Analytics — from real Firestore activity</figcaption></figure>
+  <figure><img src="assets/shots/zad-challenges.png" alt="Zad challenges screen with points and ranks" loading="lazy" width="360" height="760"><figcaption data-ar="التحديات — نقاط ومراتب محسوبة لا محاكاة">Challenges — computed points and ranks</figcaption></figure>
+  <figure><img src="assets/shots/zad-assistant.png" alt="Zad assistant screen" loading="lazy" width="360" height="760"><figcaption data-ar="المساعد — القاعدة أولًا ثم الذكاء الاصطناعي">Assistant — database first, AI second</figcaption></figure>
+</div></div>
       </article>
 
       <article class="proj rv">
