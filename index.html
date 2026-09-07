@@ -8,11 +8,39 @@
 <meta name="theme-color" content="#000000">
 <meta property="og:title" content="Ahmed Alshareef — Software Engineer">
 <meta property="og:description" content="Applications & data systems. Flutter, React, TypeScript, Node.js, SQL. Makkah, Saudi Arabia.">
-<meta property="og:type" content="website">
+<meta property="og:type" content="profile">
+<meta property="og:image" content="https://whykaiser.github.io/portfolio/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Ahmed Alshareef — Software Engineer">
+<meta name="twitter:description" content="Applications &amp; data systems. Flutter, React, TypeScript, Node.js, SQL. Makkah, Saudi Arabia.">
+<meta name="twitter:image" content="https://whykaiser.github.io/portfolio/assets/og.png">
+<link rel="canonical" href="https://whykaiser.github.io/portfolio/">
 <meta property="og:url" content="https://whykaiser.github.io/portfolio/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Ahmed Kamal Alshareef",
+  "alternateName": "أحمد كمال الشريف",
+  "jobTitle": "Software Engineer",
+  "email": "mailto:alshareef12k@gmail.com",
+  "url": "https://whykaiser.github.io/portfolio/",
+  "address": { "@type": "PostalAddress", "addressLocality": "Makkah", "addressCountry": "SA" },
+  "alumniOf": { "@type": "CollegeOrUniversity", "name": "Umm Al-Qura University" },
+  "knowsLanguage": ["ar", "en"],
+  "knowsAbout": ["Flutter", "Dart", "React", "TypeScript", "Node.js", "SQL", "PostgreSQL", "Firebase", "Prisma", "Applied AI"],
+  "sameAs": [
+    "https://github.com/whyKaiser",
+    "https://www.linkedin.com/in/ahmed-alshareef-7b882b417",
+    "https://x.com/alshareef12k"
+  ]
+}
+</script>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' fill='%23000'/><circle cx='32' cy='32' r='7' fill='%23fff'/><circle cx='14' cy='16' r='2.5' fill='%23fff'/><circle cx='50' cy='46' r='2.5' fill='%23fff'/><circle cx='48' cy='15' r='1.8' fill='%23fff'/><circle cx='15' cy='49' r='1.8' fill='%23fff'/></svg>">
 
 <style>
@@ -61,6 +89,24 @@ html[dir="rtl"] body { font-family: var(--arab); }
 ::selection { background: var(--fg); color: var(--bg); }
 
 a { color: inherit; }
+
+/* Keyboard users get a visible focus ring; mouse users do not see it. */
+:focus-visible { outline: 2px solid var(--fg); outline-offset: 3px; }
+.skip {
+  position: absolute;
+  inset-inline-start: -9999px;
+  top: 10px;
+  z-index: 100;
+  background: var(--fg);
+  color: var(--bg);
+  padding: 10px 16px;
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  text-decoration: none;
+}
+.skip:focus { inset-inline-start: 12px; }
+.nav-links a[aria-current="true"] { color: var(--fg); }
+.nav-links a[aria-current="true"]::before { content: "/ "; color: var(--dim2); }
 .wrap { width: min(var(--wrap), calc(100% - 44px)); margin-inline: auto; }
 
 /* ------------------------------------------------------- star canvas */
@@ -216,9 +262,11 @@ html[dir="rtl"] .hero-name { letter-spacing: 0; line-height: 1.2; text-transform
   transition: background 0.32s var(--ease), color 0.32s var(--ease), padding 0.32s var(--ease);
 }
 /* the signature move: a row inverts to the opposite colour on hover */
-a.proj:hover { background: var(--fg); color: var(--bg); padding-inline: 22px 6px; }
-a.proj:hover .p-stack, a.proj:hover .p-desc, a.proj:hover .p-no { color: inherit; opacity: 0.72; }
-a.proj:hover .p-go { opacity: 1; transform: none; }
+.proj:not(.open):hover { background: var(--fg); color: var(--bg); padding-inline: 22px 6px; }
+.proj:not(.open):hover .p-stack, .proj:not(.open):hover .p-desc, .proj:not(.open):hover .p-no,
+.proj:not(.open):hover .p-go.dim { color: inherit; opacity: 0.72; }
+.proj:not(.open):hover .p-toggle { border-color: var(--bg); }
+.proj:not(.open):hover .p-toggle:hover { background: var(--bg); color: var(--fg); }
 .p-no { font-family: var(--mono); font-size: 0.78rem; color: var(--dim2); padding-top: 4px; }
 .p-title { font-size: 1.18rem; font-weight: 700; line-height: 1.25; }
 .p-stack { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.08em; color: var(--dim2); margin-top: 8px; }
@@ -234,8 +282,62 @@ a.proj:hover .p-go { opacity: 1; transform: none; }
   white-space: nowrap;
 }
 html[dir="rtl"] .p-go { transform: translateX(8px); }
-.proj.static { cursor: default; }
-.proj.static .p-go { opacity: 1; transform: none; color: var(--dim2); }
+
+/* ------------------------------------------------------ case studies */
+.proj { grid-template-columns: 62px minmax(0, 1.05fr) minmax(0, 1.4fr) auto; }
+.p-head { min-width: 0; }
+.p-title { font-size: 1.18rem; font-weight: 700; line-height: 1.25; text-decoration: none; display: inline-block; }
+a.p-title:hover { text-decoration: underline; text-underline-offset: 4px; }
+.p-actions { display: flex; align-items: center; gap: 14px; }
+.p-toggle {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  color: var(--fg);
+  background: transparent;
+  border: 1px solid var(--line-strong);
+  padding: 6px 12px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.25s var(--ease), color 0.25s var(--ease);
+}
+.p-toggle:hover { background: var(--fg); color: var(--bg); }
+.p-toggle::after { content: " +"; }
+.proj.open .p-toggle::after { content: " \2212"; }
+.p-go { opacity: 1; transform: none; text-decoration: none; }
+.p-go.dim { color: var(--dim2); }
+.p-case {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 26px;
+  margin-top: 22px;
+  padding-top: 22px;
+  border-top: 1px solid var(--line);
+}
+.case-block h4 { color: var(--dim2); margin-bottom: 8px; }
+.case-block p { color: var(--dim); font-size: 0.92rem; }
+.proj.open { background: var(--panel); }
+
+/* --------------------------------------------------------- activity */
+.act-grid { margin-top: 40px; display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 40px; }
+.act-h { color: var(--dim2); padding-bottom: 12px; border-bottom: 1px solid var(--line-strong); }
+.act-rows { display: grid; }
+.act-row {
+  display: flex; align-items: baseline; justify-content: space-between; gap: 16px;
+  padding: 12px 4px;
+  border-bottom: 1px solid var(--line);
+  text-decoration: none;
+  font-size: 0.95rem;
+  transition: padding 0.25s var(--ease), background 0.25s var(--ease), color 0.25s var(--ease);
+}
+a.act-row:hover { background: var(--fg); color: var(--bg); padding-inline: 12px 4px; }
+.act-row .when { font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.08em; color: var(--dim2); flex: none; }
+a.act-row:hover .when { color: inherit; opacity: 0.72; }
+.lang-row { display: grid; grid-template-columns: 130px 1fr 44px; gap: 12px; align-items: center; padding: 11px 4px; border-bottom: 1px solid var(--line); font-size: 0.92rem; }
+.lang-bar { height: 6px; background: var(--line); }
+.lang-bar i { display: block; height: 100%; background: var(--fg); }
+.lang-row .n { font-family: var(--mono); font-size: 0.72rem; color: var(--dim2); text-align: end; }
 
 /* ----------------------------------------------------------- skills */
 .skill-cols { margin-top: 40px; display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 34px; }
@@ -296,6 +398,8 @@ footer { border-top: 1px solid var(--line); padding: 24px 0; color: var(--dim2);
 
 <body>
 
+<a class="skip" href="#top" data-ar="تخطَّ إلى المحتوى">Skip to content</a>
+
 <div id="progress"></div>
 <canvas id="stars" aria-hidden="true"></canvas>
 
@@ -340,6 +444,7 @@ footer { border-top: 1px solid var(--line); padding: 24px 0; color: var(--dim2);
         <div class="hero-cta">
           <a class="btn btn-solid" href="#projects" data-ar="شوف المشاريع">View work</a>
           <a class="btn btn-ghost" href="mailto:alshareef12k@gmail.com" data-ar="تواصل معي">Get in touch</a>
+          <a class="btn btn-ghost" href="assets/Ahmed-Alshareef-CV.pdf" download data-ar="تحميل السيرة PDF">Download CV</a>
         </div>
       </div>
     </div>
@@ -349,7 +454,7 @@ footer { border-top: 1px solid var(--line); padding: 24px 0; color: var(--dim2);
 <div class="wrap">
   <div class="readout mono rv">
     <div><div class="val" id="stat-repos">9</div><div class="lbl" data-ar="مستودع عام">Public repos</div></div>
-    <div><div class="val" id="stat-langs">6</div><div class="lbl" data-ar="لغة برمجة">Languages</div></div>
+    <div><div class="val" id="stat-langs">5</div><div class="lbl" data-ar="لغة برمجة">Languages</div></div>
     <div><div class="val">2</div><div class="lbl" data-ar="سنة خبرة عملية">Years working</div></div>
     <div><div class="val">600</div><div class="lbl" data-ar="ساعة تدريب تعاوني">Co-op training hours</div></div>
   </div>
@@ -410,96 +515,127 @@ footer { border-top: 1px solid var(--line); padding: 24px 0; color: var(--dim2);
 
     <div class="projects">
 
-      <a class="proj rv" href="https://github.com/whyKaiser/Dhakker" target="_blank" rel="noreferrer">
+      <article class="proj rv">
         <div class="p-no">01</div>
-        <div>
-          <div class="p-title" data-ar="ذاكر — رفيق الحج والعمرة">Dhakker — Hajj &amp; Umrah Companion</div>
-          <div class="p-stack">FLUTTER · FIREBASE · CLOUDFLARE WORKERS</div>
+        <div class="p-head"><a class="p-title" href="https://github.com/whyKaiser/Dhakker" target="_blank" rel="noreferrer" data-ar="ذاكر — رفيق الحج والعمرة">Dhakker — Hajj &amp; Umrah Companion</a><div class="p-stack">FLUTTER · FIREBASE · CLOUDFLARE WORKERS</div></div>
+        <p class="p-desc" data-ar="مشروع التخرّج. يتتبّع أشواط الطواف والسعي تلقائيًا عبر GPS ودمج الحساسات، مع مساعد صوتي.">Graduation project. Auto-counts Tawaf and Sa'i circuits through GPS and sensor fusion, with a voice assistant.</p>
+        <div class="p-actions">
+          <button class="p-toggle mono" type="button" aria-expanded="false" aria-controls="case-01" data-ar="التفاصيل">CASE</button>
+          <a class="p-go" href="https://github.com/whyKaiser/Dhakker" target="_blank" rel="noreferrer" data-ar="المستودع ↗">REPO ↗</a>
         </div>
-        <div class="p-desc" data-ar="مشروع التخرّج. يتتبّع أشواط الطواف والسعي تلقائيًا عبر GPS ودمج الحساسات، مع مساعد صوتي. المفاتيح تمرّ عبر Cloudflare Worker ولا تُحزم داخل التطبيق. سجّل الاختبار دقة موقع تتجاوز ٩٥٪.">Graduation project. Auto-counts Tawaf and Sa'i circuits through GPS and sensor fusion, with a voice assistant. API keys proxied through a Cloudflare Worker, never bundled client-side. Testing recorded over 95% location accuracy.</div>
-        <div class="p-go" data-ar="المستودع ↗">REPO ↗</div>
-      </a>
+        <div class="p-case" id="case-01" hidden><div class="case-block"><h4 class="mono" data-ar="المشكلة">Problem</h4><p data-ar="الحاج يحتاج إرشادًا عربيًا ويداه مشغولتان، وعدّ الأشواط يدويًا هو ما يقطع التركيز.">Pilgrims need Arabic-first guidance while their hands are busy, and counting circuits manually is exactly what breaks concentration.</p></div><div class="case-block"><h4 class="mono" data-ar="الطريقة">Approach</h4><p data-ar="Flutter مع Firebase Auth وFirestore لطبقة البيانات، وتسييج جغرافي عبر GPS مدموج بحساسات الجهاز لرصد الأشواط، ومساعد صوتي للاستخدام بلا يدين. كل مفتاح API يمرّ عبر Cloudflare Worker حتى لا يُحزم شيء حسّاس داخل التطبيق.">Flutter with Firebase Auth and Firestore for the data layer, GPS geofencing fused with device sensors for circuit detection, and a voice assistant for hands-free use. Every API key is proxied through a Cloudflare Worker so nothing sensitive ships in the app bundle.</p></div><div class="case-block"><h4 class="mono" data-ar="النتيجة">Result</h4><p data-ar="سجّل اختبار المشروع دقة موقع تتجاوز ٩٥٪ في مسار الموقع الذي جرى اختباره.">Project testing recorded over 95% location accuracy across the tested location workflow.</p></div></div>
+      </article>
 
-      <a class="proj rv" href="https://github.com/whyKaiser/Mirfaq-Maintenance" target="_blank" rel="noreferrer">
+      <article class="proj rv">
         <div class="p-no">02</div>
-        <div>
-          <div class="p-title" data-ar="مِرفق — منصة صيانة العقارات">Mirfaq — Property Maintenance Platform</div>
-          <div class="p-stack">REACT · TYPESCRIPT · PRISMA · POSTGRESQL</div>
+        <div class="p-head"><a class="p-title" href="https://github.com/whyKaiser/Mirfaq-Maintenance" target="_blank" rel="noreferrer" data-ar="مِرفق — منصة صيانة العقارات">Mirfaq — Property Maintenance Platform</a><div class="p-stack">REACT · TYPESCRIPT · PRISMA · POSTGRESQL</div></div>
+        <p class="p-desc" data-ar="تربط مدير العقار والساكن والفني عبر دورة بلاغ الصيانة كاملة.">Connects property managers, residents and technicians across the full maintenance request lifecycle.</p>
+        <div class="p-actions">
+          <button class="p-toggle mono" type="button" aria-expanded="false" aria-controls="case-02" data-ar="التفاصيل">CASE</button>
+          <a class="p-go" href="https://github.com/whyKaiser/Mirfaq-Maintenance" target="_blank" rel="noreferrer" data-ar="المستودع ↗">REPO ↗</a>
         </div>
-        <div class="p-desc" data-ar="منصة عربية تربط مدير العقار والساكن والفني عبر دورة البلاغ كاملة: إنشاء، إسناد، إنجاز، وتقارير — على نماذج بيانات علائقية مع صلاحيات حسب الدور واختبارات آلية.">Connects property managers, residents and technicians across the full request lifecycle: creation, assignment, completion and reporting — on relational data models with role-based access and automated tests.</div>
-        <div class="p-go" data-ar="المستودع ↗">REPO ↗</div>
-      </a>
+        <div class="p-case" id="case-02" hidden><div class="case-block"><h4 class="mono" data-ar="المشكلة">Problem</h4><p data-ar="بلاغ الصيانة بلا مالك واضح ولا سجل حالة يتحوّل إلى مكالمة، ثم إلى خلاف حول ما وُعد به.">A maintenance report with no clear owner and no status trail turns into a phone call, and then into an argument about what was promised.</p></div><div class="case-block"><h4 class="mono" data-ar="الطريقة">Approach</h4><p data-ar="نماذج بيانات علائقية في Prisma فوق PostgreSQL، وصلاحيات حسب الدور تفصل بين المدير والساكن والفني، وحالات صريحة للبلاغ من الإنشاء إلى الإسناد إلى الإنجاز.">Relational data models in Prisma over PostgreSQL, with role-based access separating manager, resident and technician, and explicit lifecycle states from creation through assignment to completion.</p></div><div class="case-block"><h4 class="mono" data-ar="النتيجة">Result</h4><p data-ar="الدورة كاملة تعمل في مكان واحد مع الإشعارات والتقارير، واختبارات آلية تغطي المسارات الأساسية.">The full lifecycle runs in one place with notifications and reporting, and automated tests cover the core workflows.</p></div></div>
+      </article>
 
-      <a class="proj rv" href="https://github.com/whyKaiser/waqfa" target="_blank" rel="noreferrer">
+      <article class="proj rv">
         <div class="p-no">03</div>
-        <div>
-          <div class="p-title" data-ar="وقفة — أداة قرار الشراء">Waqfa — Purchase Decision Tool</div>
-          <div class="p-stack">FLUTTER · DART · GROQ API</div>
+        <div class="p-head"><a class="p-title" href="https://github.com/whyKaiser/waqfa" target="_blank" rel="noreferrer" data-ar="وقفة — أداة قرار الشراء">Waqfa — Purchase Decision Tool</a><div class="p-stack">FLUTTER · DART · GROQ API</div></div>
+        <p class="p-desc" data-ar="تُظهر أثر القسط الجديد على تدفّقك النقدي قبل أن تلتزم به.">Shows what a new instalment does to your cash flow before you commit to it.</p>
+        <div class="p-actions">
+          <button class="p-toggle mono" type="button" aria-expanded="false" aria-controls="case-03" data-ar="التفاصيل">CASE</button>
+          <a class="p-go" href="https://github.com/whyKaiser/waqfa" target="_blank" rel="noreferrer" data-ar="المستودع ↗">REPO ↗</a>
         </div>
-        <div class="p-desc" data-ar="بُني في هاكاثون أمد ٢٠٢٦. يحسب التدفّق النقدي ٩٠ يومًا قادمة من الدخل والمصروف ليُظهر أثر القسط قبل الالتزام. الحساب حتمي، والذكاء الاصطناعي يشرح النتيجة فقط ولا يولّد أي رقم.">Built at Amad Hackathon 2026. Runs a 90-day cash-flow calculation from income and expense inputs to show what a new instalment does before you commit. The calculation is deterministic; the AI only explains it and never produces a number.</div>
-        <div class="p-go" data-ar="المستودع ↗">REPO ↗</div>
-      </a>
+        <div class="p-case" id="case-03" hidden><div class="case-block"><h4 class="mono" data-ar="المشكلة">Problem</h4><p data-ar="القسط الواحد يبدو دائمًا محتملًا بذاته. الضرر يظهر بعد أسابيع، حين تجتمع عدة أقساط في شهر واحد.">A single instalment always looks affordable on its own. The damage shows up weeks later, when several of them land in the same month.</p></div><div class="case-block"><h4 class="mono" data-ar="الطريقة">Approach</h4><p data-ar="حساب حتمي للتدفّق النقدي على ٩٠ يومًا من مدخلات الدخل والمصروف. النموذج اللغوي مُبعد عن الحساب تمامًا، ولا يكتب إلا الشرح العربي لنتيجة لم يحسبها.">A deterministic 90-day cash-flow calculation from income and expense inputs. The language model is kept out of the arithmetic entirely and only writes the Arabic explanation of a result it did not compute.</p></div><div class="case-block"><h4 class="mono" data-ar="النتيجة">Result</h4><p data-ar="كل رقم على الشاشة يمكن تتبّعه إلى المحرّك المحلي، فالنتيجة تُراجَع لا تُصدَّق فقط. بُنيت في هاكاثون أمد ٢٠٢٦ بنطاق نموذج أولي، بلا ارتباط بأي مزوّد تقسيط حقيقي.">Every number on screen is traceable to the local engine, so the output can be checked rather than trusted. Built at Amad Hackathon 2026; prototype scope, with no live BNPL provider connected.</p></div></div>
+      </article>
 
-      <a class="proj rv" href="https://github.com/whyKaiser/zad" target="_blank" rel="noreferrer">
+      <article class="proj rv">
         <div class="p-no">04</div>
-        <div>
-          <div class="p-title" data-ar="زاد — تتبّع تغذية خليجي">Zad — Gulf-First Nutrition Tracker</div>
-          <div class="p-stack">FLUTTER · FIREBASE · FIRESTORE</div>
+        <div class="p-head"><a class="p-title" href="https://github.com/whyKaiser/zad" target="_blank" rel="noreferrer" data-ar="زاد — تتبّع تغذية خليجي">Zad — Gulf-First Nutrition Tracker</a><div class="p-stack">FLUTTER · FIREBASE · FIRESTORE</div></div>
+        <p class="p-desc" data-ar="تتبّع سعرات ولياقة مبني للمستخدم الخليجي، بقاعدة أطباق محلية موثّقة.">Calorie and fitness tracking built for the Gulf user, with a verified local dish database.</p>
+        <div class="p-actions">
+          <button class="p-toggle mono" type="button" aria-expanded="false" aria-controls="case-04" data-ar="التفاصيل">CASE</button>
+          <a class="p-go" href="https://github.com/whyKaiser/zad" target="_blank" rel="noreferrer" data-ar="المستودع ↗">REPO ↗</a>
         </div>
-        <div class="p-desc" data-ar="تتبّع سعرات ولياقة مبني للمستخدم الخليجي: قاعدة أطباق محلية موثّقة بدل التخمين، واجهة عربية RTL، والذكاء الاصطناعي بديل موسوم بوضوح لا مصدر الحقيقة.">Calorie and fitness tracking built for the Gulf user: a verified local dish database instead of guesswork, an Arabic-first RTL interface, and AI as a clearly labelled fallback rather than the source of truth.</div>
-        <div class="p-go" data-ar="المستودع ↗">REPO ↗</div>
-      </a>
+        <div class="p-case" id="case-04" hidden><div class="case-block"><h4 class="mono" data-ar="المشكلة">Problem</h4><p data-ar="تطبيقات التغذية تخمّن قيم الأطباق الخليجية، ورقم خاطئ يُعرض بثقة أسوأ من غياب الرقم.">Nutrition apps guess at Gulf dishes, and a wrong number typed with confidence is worse than no number at all.</p></div><div class="case-block"><h4 class="mono" data-ar="الطريقة">Approach</h4><p data-ar="قاعدة أطباق محلية موثّقة تجيب أولًا، والذكاء الاصطناعي بديل موسوم بوضوح لا مصدر حقيقة. واجهة عربية RTL، ودخول مجهول افتراضيًا حتى لا يعيق شيء أول استخدام.">A verified local dish database answers first; AI is a clearly labelled fallback, never the source of truth. Arabic-first RTL interface, anonymous auth by default so nothing blocks the first use.</p></div><div class="case-block"><h4 class="mono" data-ar="النتيجة">Result</h4><p data-ar="السلاسل والمراتب تُحسب من نشاط Firestore الحقيقي لا محاكاةً، فالتقدّم يعكس ما فعله المستخدم فعلًا.">Streaks and ranks are computed from real Firestore activity rather than simulated, so progress reflects what the user actually did.</p></div></div>
+      </article>
 
-      <a class="proj rv" href="https://our-ai-app.songokualshareef.workers.dev/" target="_blank" rel="noreferrer">
+      <article class="proj rv">
         <div class="p-no">05</div>
-        <div>
-          <div class="p-title" data-ar="سيرا — مساحة ذكاء اصطناعي ثنائية اللغة">Sera — Bilingual AI Workspace</div>
-          <div class="p-stack">WORKERS AI · D1 · SSE</div>
+        <div class="p-head"><a class="p-title" href="https://our-ai-app.songokualshareef.workers.dev/" target="_blank" rel="noreferrer" data-ar="سيرا — مساحة ذكاء اصطناعي ثنائية اللغة">Sera — Bilingual AI Workspace</a><div class="p-stack">WORKERS AI · D1 · SSE</div></div>
+        <p class="p-desc" data-ar="مساحة ذكاء اصطناعي عربية/إنجليزية تعمل بالكامل على حافة Cloudflare.">An Arabic/English AI workspace running entirely on Cloudflare's edge.</p>
+        <div class="p-actions">
+          <button class="p-toggle mono" type="button" aria-expanded="false" aria-controls="case-05" data-ar="التفاصيل">CASE</button>
+          <a class="p-go" href="https://our-ai-app.songokualshareef.workers.dev/" target="_blank" rel="noreferrer" data-ar="مباشر ↗">LIVE ↗</a>
         </div>
-        <div class="p-desc" data-ar="مساحة عربية/إنجليزية تعمل بالكامل على حافة Cloudflare: Workers AI للاستدلال، وD1 للتخزين، وSSE لبثّ الردود — بلا خادم يحتاج صيانة.">Runs entirely on Cloudflare's edge: Workers AI for inference, D1 for storage and SSE for streamed responses — with no server to keep alive.</div>
-        <div class="p-go" data-ar="مباشر ↗">LIVE ↗</div>
-      </a>
+        <div class="p-case" id="case-05" hidden><div class="case-block"><h4 class="mono" data-ar="المشكلة">Problem</h4><p data-ar="أداة ذكاء اصطناعي صغيرة لا يجب أن تتطلّب خادمًا تبقيه حيًّا وتحدّثه وتدفع ثمنه.">A small AI tool should not require a server to keep alive, patch and pay for.</p></div><div class="case-block"><h4 class="mono" data-ar="الطريقة">Approach</h4><p data-ar="Workers AI للاستدلال، وD1 للتخزين، وSSE لبثّ الردود — نشرة واحدة بلا جهاز يعمل على الدوام.">Workers AI for inference, D1 for storage and server-sent events for streamed responses — one deployment, no always-on machine.</p></div><div class="case-block"><h4 class="mono" data-ar="النتيجة">Result</h4><p data-ar="المساحة كاملة تُنشر على الحافة وتبقى ثنائية اللغة من الطرف إلى الطرف، واجهةً وردودًا.">The whole workspace ships as an edge deployment and stays bilingual end to end, interface and responses alike.</p></div></div>
+      </article>
 
-      <a class="proj rv" href="https://github.com/whyKaiser/rent-freeze-checker" target="_blank" rel="noreferrer">
+      <article class="proj rv">
         <div class="p-no">06</div>
-        <div>
-          <div class="p-title" data-ar="فاحص تثبيت الإيجار">Rent Freeze Checker</div>
-          <div class="p-stack">REACT · TYPESCRIPT · VITE</div>
+        <div class="p-head"><a class="p-title" href="https://github.com/whyKaiser/rent-freeze-checker" target="_blank" rel="noreferrer" data-ar="فاحص تثبيت الإيجار">Rent Freeze Checker</a><div class="p-stack">REACT · TYPESCRIPT · VITE</div></div>
+        <p class="p-desc" data-ar="يفحص هل زيادة الإيجار أو إشعار الإخلاء في الرياض يخالف قرار التثبيت.">Checks whether a rent increase or eviction notice in Riyadh conflicts with the rent-freeze decision.</p>
+        <div class="p-actions">
+          <button class="p-toggle mono" type="button" aria-expanded="false" aria-controls="case-06" data-ar="التفاصيل">CASE</button>
+          <a class="p-go" href="https://github.com/whyKaiser/rent-freeze-checker" target="_blank" rel="noreferrer" data-ar="المستودع ↗">REPO ↗</a>
         </div>
-        <div class="p-desc" data-ar="أداة استرشادية تفحص هل زيادة الإيجار أو إشعار الإخلاء في الرياض يخالف قرار التثبيت. تعمل بالكامل في المتصفح ولا تغادر أي بيانات الجهاز، والحكم قائم على قواعد موثّقة لا على نموذج لغوي.">Checks whether a rent increase or eviction notice in Riyadh conflicts with the rent-freeze decision. Fully client-side — no data leaves the device — with rule-based, source-cited verdicts and no LLM in the decision path.</div>
-        <div class="p-go" data-ar="المستودع ↗">REPO ↗</div>
-      </a>
+        <div class="p-case" id="case-06" hidden><div class="case-block"><h4 class="mono" data-ar="المشكلة">Problem</h4><p data-ar="الناس يستلمون الإشعار ولا يملكون طريقة سهلة لمعرفة هل هو مسموح أصلًا.">People receive a notice and have no cheap way to tell whether it is even allowed.</p></div><div class="case-block"><h4 class="mono" data-ar="الطريقة">Approach</h4><p data-ar="أحكام قائمة على قواعد مع ذكر المصدر، وإبعاد أي نموذج لغوي عن مسار قرار له أثر نظامي. الأداة كاملة تعمل داخل المتصفح.">Rule-based verdicts with cited sources, deliberately keeping any language model out of a legally sensitive decision path. The whole tool runs client-side.</p></div><div class="case-block"><h4 class="mono" data-ar="النتيجة">Result</h4><p data-ar="لا تغادر أي بيانات جهاز المستخدم، وكل حكم يمكن ردّه إلى القاعدة التي أنتجته.">No data leaves the device, and every verdict can be traced back to the rule that produced it.</p></div></div>
+      </article>
 
-      <a class="proj rv" href="https://whykaiser.github.io/nexaforge-3d/" target="_blank" rel="noreferrer">
+      <article class="proj rv">
         <div class="p-no">07</div>
-        <div>
-          <div class="p-title" data-ar="نيكسافورج ٣د">NexaForge 3D</div>
-          <div class="p-stack">THREE.JS · MODEL-VIEWER · GSAP</div>
+        <div class="p-head"><a class="p-title" href="https://whykaiser.github.io/nexaforge-3d/" target="_blank" rel="noreferrer" data-ar="نيكسافورج ٣د">NexaForge 3D</a><div class="p-stack">THREE.JS · MODEL-VIEWER · GSAP</div></div>
+        <p class="p-desc" data-ar="تحوّل الصور ثنائية الأبعاد إلى أصول ثلاثية الأبعاد جاهزة للألعاب، مع عارض داخل المتصفح وتبديل كامل بين العربية والإنجليزية.">Turns 2D images into game-ready 3D assets, with an in-browser viewer and a full Arabic/English toggle.</p>
+        <div class="p-actions">
+          <button class="p-toggle mono" type="button" aria-expanded="false" aria-controls="case-07" data-ar="التفاصيل">CASE</button>
+          <a class="p-go" href="https://whykaiser.github.io/nexaforge-3d/" target="_blank" rel="noreferrer" data-ar="مباشر ↗">LIVE ↗</a>
         </div>
-        <div class="p-desc" data-ar="منصة عربية أولًا تحوّل الصور ثنائية الأبعاد إلى أصول ثلاثية الأبعاد جاهزة للألعاب، مع عارض داخل المتصفح وتبديل كامل بين العربية والإنجليزية. لا أسرار مضمّنة.">Turns 2D images into game-ready 3D assets, with an in-browser viewer and a full Arabic/English toggle. No secrets bundled — the server URL and token are entered per session.</div>
-        <div class="p-go" data-ar="مباشر ↗">LIVE ↗</div>
-      </a>
+        <div class="p-case" id="case-07" hidden><div class="case-block"><h4 class="mono" data-ar="الطريقة">Approach</h4><p data-ar="المتصفح يتكفّل بالعارض والواجهة، والتحويل يجري على خادم معالجة يُدخل المستخدم عنوانه ورمزه لكل جلسة.">The browser handles the viewer and the interface; the conversion runs on a processing server whose URL and token the user supplies per session.</p></div><div class="case-block"><h4 class="mono" data-ar="النتيجة">Result</h4><p data-ar="لا أسرار مضمّنة في الموقع، فالنسخة المنشورة لا تحمل بيانات اعتماد قابلة للتسريب.">No secrets are bundled into the site, so the deployment carries no credentials to leak.</p></div></div>
+      </article>
 
-      <div class="proj static rv">
+      <article class="proj rv">
         <div class="p-no">08</div>
-        <div>
-          <div class="p-title" data-ar="رهان إرم — روغلايك ثلاثي الأبعاد">Wager of Iram — 3D Action Roguelike</div>
-          <div class="p-stack">GODOT · GDSCRIPT</div>
+        <div class="p-head"><span class="p-title" data-ar="رهان إرم — روغلايك ثلاثي الأبعاد">Wager of Iram — 3D Action Roguelike</span><div class="p-stack">GODOT · GDSCRIPT</div></div>
+        <p class="p-desc" data-ar="لعبة أكشن روغلايك مستوحاة من Sekiro بمحرك Godot مع إضافة وكيل ذكاء اصطناعي داخل المحرر.">A Sekiro-inspired action roguelike in Godot with a custom in-editor AI agent addon.</p>
+        <div class="p-actions">
+          <button class="p-toggle mono" type="button" aria-expanded="false" aria-controls="case-08" data-ar="التفاصيل">CASE</button>
+          <span class="p-go dim" data-ar="قيد التطوير">IN DEV</span>
         </div>
-        <div class="p-desc" data-ar="لعبة أكشن روغلايك مستوحاة من Sekiro بمحرك Godot مع إضافة وكيل ذكاء اصطناعي داخل المحرر. الفكرة المحورية: الكِبر مقابل التواضع — النهاية الحقيقية أن ترمي السيف لا أن تنتصر به.">A Sekiro-inspired action roguelike in Godot with a custom in-editor AI agent addon. Central theme: pride against humility — the true ending is throwing the sword away, not winning the fight.</div>
-        <div class="p-go" data-ar="قيد التطوير">IN DEV</div>
-      </div>
+        <div class="p-case" id="case-08" hidden><div class="case-block"><h4 class="mono" data-ar="الفكرة">Idea</h4><p data-ar="الكِبر مقابل التواضع، محمولًا على الميكانيكا لا على الحوار: النهاية الحقيقية أن ترمي السيف لا أن تنتصر به.">Pride against humility, carried by the mechanics rather than the dialogue: the true ending is throwing the sword away, not winning the fight.</p></div></div>
+      </article>
 
-      <div class="proj static rv">
+      <article class="proj rv">
         <div class="p-no">09</div>
-        <div>
-          <div class="p-title" data-ar="لعبة رعب السينما">Cinema Horror Game</div>
-          <div class="p-stack">UNITY · C# · NETCODE</div>
+        <div class="p-head"><span class="p-title" data-ar="لعبة رعب السينما">Cinema Horror Game</span><div class="p-stack">UNITY · C# · NETCODE</div></div>
+        <p class="p-desc" data-ar="لعبة رعب تعاونية متعددة اللاعبين بمحرك Unity، في سينما كهرباؤها تتعطّل.">A co-op multiplayer horror game in Unity, set in a cinema that runs on failing power.</p>
+        <div class="p-actions">
+          <button class="p-toggle mono" type="button" aria-expanded="false" aria-controls="case-09" data-ar="التفاصيل">CASE</button>
+          <span class="p-go dim" data-ar="قيد التطوير">IN DEV</span>
         </div>
-        <div class="p-desc" data-ar="لعبة رعب تعاونية متعددة اللاعبين بمحرك Unity. اللاعبون موظفو سينما ليلًا، يحملون بكرات الأفلام ويلصقونها لإبقاء الوحوش داخل الشاشة بينما تتعطّل كهرباء العارض.">A co-op multiplayer horror game in Unity. Players work a cinema at night, carrying and splicing film reels to keep the monsters on-screen while the projector's power keeps failing.</div>
-        <div class="p-go" data-ar="قيد التطوير">IN DEV</div>
-      </div>
+        <div class="p-case" id="case-09" hidden><div class="case-block"><h4 class="mono" data-ar="الفكرة">Idea</h4><p data-ar="اللاعبون يحملون بكرات الأفلام ويلصقونها لإبقاء الوحوش داخل الشاشة بينما تتعطّل كهرباء العارض. أعمق شغل شبكات حتى الآن.">Players carry and splice film reels to keep the monsters trapped on screen while the projector's power supply keeps failing. Deepest networking work so far.</p></div></div>
+      </article>
 
+    </div>
+  </div>
+</section>
+
+<!-- ======================================================== ACTIVITY -->
+<section id="activity" hidden>
+  <div class="wrap">
+    <div class="sec-head rv">
+      <span class="mono idx">03</span>
+      <h2 class="h2" data-ar="نشاط مباشر">Live activity</h2>
+    </div>
+    <p class="lede rv" data-ar="مقروء من واجهة GitHub العامة عند فتح الصفحة — لا لقطة قديمة.">Read from the public GitHub API when this page loads — not a stale snapshot.</p>
+
+    <div class="act-grid">
+      <div>
+        <h4 class="mono act-h" data-ar="آخر تحديث للمستودعات">Recently pushed</h4>
+        <div id="act-repos" class="act-rows"></div>
+      </div>
+      <div>
+        <h4 class="mono act-h" data-ar="اللغة الأساسية لكل مستودع">Primary language per repo</h4>
+        <div id="act-langs" class="act-rows"></div>
+      </div>
     </div>
   </div>
 </section>
@@ -508,7 +644,7 @@ footer { border-top: 1px solid var(--line); padding: 24px 0; color: var(--dim2);
 <section id="skills">
   <div class="wrap">
     <div class="sec-head rv">
-      <span class="mono idx">03</span>
+      <span class="mono idx">04</span>
       <h2 class="h2" data-ar="المهارات">Capabilities</h2>
     </div>
 
@@ -544,7 +680,7 @@ footer { border-top: 1px solid var(--line); padding: 24px 0; color: var(--dim2);
 <section id="certs">
   <div class="wrap">
     <div class="sec-head rv">
-      <span class="mono idx">04</span>
+      <span class="mono idx">05</span>
       <h2 class="h2" data-ar="الشهادات">Credentials</h2>
     </div>
 
@@ -577,7 +713,7 @@ footer { border-top: 1px solid var(--line); padding: 24px 0; color: var(--dim2);
 <section id="contact">
   <div class="wrap">
     <div class="sec-head rv">
-      <span class="mono idx">05</span>
+      <span class="mono idx">06</span>
       <h2 class="h2" data-ar="تواصل">Contact</h2>
     </div>
     <p class="lede rv" data-ar="متاح لوظائف هندسة برمجيات ودعم التطبيقات والبيانات، وللعمل الحر على المنتجات.">Open to junior software engineering roles, applications and data support, and freelance product work.</p>
@@ -587,6 +723,7 @@ footer { border-top: 1px solid var(--line); padding: 24px 0; color: var(--dim2);
       <a class="contact-row" href="https://www.linkedin.com/in/ahmed-alshareef-7b882b417" target="_blank" rel="noreferrer"><span class="k mono">LINKEDIN</span><span dir="ltr">ahmed-alshareef</span></a>
       <a class="contact-row" href="https://github.com/whyKaiser" target="_blank" rel="noreferrer"><span class="k mono">GITHUB</span><span dir="ltr">whyKaiser</span></a>
       <a class="contact-row" href="https://x.com/alshareef12k" target="_blank" rel="noreferrer"><span class="k mono">X</span><span dir="ltr">@alshareef12k</span></a>
+      <a class="contact-row" href="assets/Ahmed-Alshareef-CV.pdf" download><span class="k mono" data-ar="السيرة">CV</span><span dir="ltr">Ahmed-Alshareef-CV.pdf</span></a>
       <a class="contact-row" href="tel:+966544964489"><span class="k mono" data-ar="الجوال">PHONE</span><span dir="ltr">+966 54 496 4489</span></a>
     </div>
   </div>
@@ -746,6 +883,7 @@ footer { border-top: 1px solid var(--line); padding: 24px 0; color: var(--dim2);
     needsDraw = true;
     var max = document.body.scrollHeight - window.innerHeight;
     progress.style.width = (max > 0 ? (scrollY / max) * 100 : 0) + "%";
+    spy();
     ticking = false;
   }
 
@@ -786,12 +924,114 @@ footer { border-top: 1px solid var(--line); padding: 24px 0; color: var(--dim2);
   /* ------------------------------------------- live numbers, best effort
      The readout ships with correct static values; if the public GitHub API
      answers, they are refreshed from it. A failure changes nothing.      */
+  /* --------------------------------------------------- case study panels */
+  Array.prototype.forEach.call(document.querySelectorAll(".p-toggle"), function (btn) {
+    btn.addEventListener("click", function () {
+      var panel = document.getElementById(btn.getAttribute("aria-controls"));
+      var open = btn.getAttribute("aria-expanded") === "true";
+      btn.setAttribute("aria-expanded", String(!open));
+      panel.hidden = open;
+      btn.closest(".proj").classList.toggle("open", !open);
+    });
+  });
+
+  /* ------------------------------------------------------------ scrollspy */
+  var navLinks = Array.prototype.slice.call(document.querySelectorAll(".nav-links a"));
+  var sections = navLinks
+    .map(function (a) { return document.querySelector(a.getAttribute("href")); })
+    .filter(Boolean);
+
+  function spy() {
+    // onScroll fires once before this block runs; nothing to mark yet.
+    if (!sections) return;
+    var pos = (window.scrollY || 0) + window.innerHeight * 0.3;
+    var current = -1;
+    sections.forEach(function (sec, i) { if (sec.offsetTop <= pos) current = i; });
+    navLinks.forEach(function (a, i) {
+      if (i === current) a.setAttribute("aria-current", "true");
+      else a.removeAttribute("aria-current");
+    });
+  }
+
+  /* ------------------------------------------------- live GitHub activity
+     Everything here is additive: the section stays hidden unless the public
+     API actually answers, so a rate limit or an offline visitor sees a page
+     that is complete without it.                                          */
+  function ago(iso) {
+    var days = Math.floor((Date.now() - new Date(iso).getTime()) / 86400000);
+    if (days <= 0) return "TODAY";
+    if (days === 1) return "1 DAY AGO";
+    if (days < 30) return days + " DAYS AGO";
+    var months = Math.round(days / 30);
+    return months === 1 ? "1 MONTH AGO" : months + " MONTHS AGO";
+  }
+
   fetch("https://api.github.com/users/whyKaiser/repos?per_page=100&type=owner")
     .then(function (r) { return r.ok ? r.json() : Promise.reject(); })
     .then(function (repos) {
       // forks are not my work, so they are excluded here as they are everywhere else
-      var own = repos.filter(function (r) { return !r.fork; }).length;
-      if (own > 0) document.getElementById("stat-repos").textContent = own;
+      var own = repos.filter(function (r) { return !r.fork; });
+      if (!own.length) return;
+
+      document.getElementById("stat-repos").textContent = own.length;
+
+      var langCount = {};
+      own.forEach(function (r) {
+        if (r.language) langCount[r.language] = (langCount[r.language] || 0) + 1;
+      });
+      var langs = Object.keys(langCount).sort(function (a, b) { return langCount[b] - langCount[a]; });
+      document.getElementById("stat-langs").textContent = langs.length;
+
+      var recent = own.slice().sort(function (a, b) {
+        return new Date(b.pushed_at) - new Date(a.pushed_at);
+      }).slice(0, 6);
+
+      var repoBox = document.getElementById("act-repos");
+      recent.forEach(function (r) {
+        var a = document.createElement("a");
+        a.className = "act-row";
+        a.href = r.html_url;
+        a.target = "_blank";
+        a.rel = "noreferrer";
+        var name = document.createElement("span");
+        name.textContent = r.name;
+        name.setAttribute("dir", "ltr");
+        var when = document.createElement("span");
+        when.className = "when";
+        when.textContent = ago(r.pushed_at);
+        a.appendChild(name);
+        a.appendChild(when);
+        repoBox.appendChild(a);
+      });
+
+      var max = langs.length ? langCount[langs[0]] : 1;
+      var langBox = document.getElementById("act-langs");
+      langs.slice(0, 6).forEach(function (name) {
+        var row = document.createElement("div");
+        row.className = "lang-row";
+        var label = document.createElement("span");
+        label.textContent = name;
+        label.setAttribute("dir", "ltr");
+        var bar = document.createElement("span");
+        bar.className = "lang-bar";
+        var fill = document.createElement("i");
+        fill.style.width = Math.round((langCount[name] / max) * 100) + "%";
+        bar.appendChild(fill);
+        var n = document.createElement("span");
+        n.className = "n";
+        n.textContent = langCount[name];
+        row.appendChild(label);
+        row.appendChild(bar);
+        row.appendChild(n);
+        langBox.appendChild(row);
+      });
+
+      var sec = document.getElementById("activity");
+      sec.hidden = false;
+      Array.prototype.forEach.call(sec.querySelectorAll(".rv"), function (t) {
+        t.classList.add("in");
+      });
+      spy();
     })
     .catch(function () {});
 })();
