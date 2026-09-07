@@ -1034,6 +1034,11 @@ footer { border-top: 1px solid var(--line); padding: 24px 0; color: var(--dim2);
   var needsDraw = true, prevT = 0;
   function loop(t) {
     t = t || 0;
+
+    // A page opened in a hidden tab or a zero-size frame builds an empty
+    // field; rebuild as soon as it is given a real size.
+    if ((!w || !h) && window.innerWidth && window.innerHeight) build();
+
     var dt = Math.min((t - prevT) / 16.67, 3);  // frames elapsed, capped after a tab switch
     prevT = t;
 
