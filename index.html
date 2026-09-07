@@ -969,7 +969,7 @@ footer { border-top: 1px solid var(--line); padding: 24px 0; color: var(--dim2);
     px += (pxTarget - px) * 0.05;
     py += (pyTarget - py) * 0.05;
 
-    var streak = Math.min(Math.abs(scrollVel) * 0.55, 26);
+    var streak = reduced ? 0 : Math.min(Math.abs(scrollVel) * 0.55, 26);
 
     for (var i = 0; i < stars.length; i++) {
       var s = stars[i];
@@ -1042,8 +1042,9 @@ footer { border-top: 1px solid var(--line); padding: 24px 0; color: var(--dim2);
     var dt = Math.min((t - prevT) / 16.67, 3);  // frames elapsed, capped after a tab switch
     prevT = t;
 
+    scrollVel *= 0.86;                          // decay the streak back to dots
+
     if (!reduced) {
-      scrollVel *= 0.86;                        // decay the streak back to dots
       nextMeteor -= dt * 16.67;
       if (!meteor && nextMeteor <= 0) {
         spawnMeteor();
