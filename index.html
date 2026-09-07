@@ -55,6 +55,12 @@
   --line: rgba(255,255,255,0.16);
   --line-strong: rgba(255,255,255,0.34);
   --panel: rgba(255,255,255,0.03);
+  /* One accent, a muted ember orange. Lighter on black, deeper on white,
+     so its contrast against the page holds in both directions. */
+  --accent: #A24E28;
+  --accent-text: #C87A4B;
+  --accent-dim: rgba(200,122,75,0.5);
+  --on-accent: #FFFFFF;
 
   --sans: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Consolas, monospace;
@@ -70,6 +76,10 @@
   --line: rgba(0,0,0,0.16);
   --line-strong: rgba(0,0,0,0.36);
   --panel: rgba(0,0,0,0.025);
+  --accent: #8F4319;
+  --accent-text: #8F4319;
+  --accent-dim: rgba(143,67,25,0.55);
+  --on-accent: #FFFFFF;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -91,7 +101,7 @@ html[dir="rtl"] body { font-family: var(--arab); }
 a { color: inherit; }
 
 /* Keyboard users get a visible focus ring; mouse users do not see it. */
-:focus-visible { outline: 2px solid var(--fg); outline-offset: 3px; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 .skip {
   position: absolute;
   inset-inline-start: -9999px;
@@ -105,8 +115,8 @@ a { color: inherit; }
   text-decoration: none;
 }
 .skip:focus { inset-inline-start: 12px; }
-.nav-links a[aria-current="true"] { color: var(--fg); }
-.nav-links a[aria-current="true"]::before { content: "/ "; color: var(--dim2); }
+.nav-links a[aria-current="true"] { color: var(--accent-text); }
+.nav-links a[aria-current="true"]::before { content: "/ "; color: var(--accent-dim); }
 .wrap { width: min(var(--wrap), calc(100% - 44px)); margin-inline: auto; }
 
 /* ------------------------------------------------------- star canvas */
@@ -128,7 +138,7 @@ a { color: inherit; }
 html[dir="rtl"] .mono { letter-spacing: 0; text-transform: none; font-size: 0.8rem; }
 
 .sec-head { display: flex; align-items: baseline; gap: 18px; border-bottom: 1px solid var(--line); padding-bottom: 16px; }
-.sec-head .idx { color: var(--dim2); }
+.sec-head .idx { color: var(--accent-text); }
 .h2 {
   font-size: clamp(1.9rem, 4.4vw, 2.9rem);
   font-weight: 700;
@@ -146,7 +156,7 @@ section { padding: clamp(70px, 10vw, 118px) 0; position: relative; }
   top: 0; inset-inline-start: 0;
   height: 2px;
   width: 0;
-  background: var(--fg);
+  background: var(--accent);
   z-index: 90;
   transition: width 0.08s linear;
 }
@@ -162,7 +172,7 @@ header.nav {
 }
 .nav-inner { display: flex; align-items: center; justify-content: space-between; gap: 18px; padding: 13px 0; }
 .brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; font-weight: 700; letter-spacing: 0.1em; font-size: 0.8rem; }
-.brand .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--fg); flex: none; }
+.brand .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--accent); flex: none; }
 .nav-links { display: flex; gap: 26px; }
 .nav-links a { text-decoration: none; color: var(--dim); transition: color 0.25s var(--ease); }
 .nav-links a:hover { color: var(--fg); }
@@ -179,7 +189,7 @@ header.nav {
   cursor: pointer;
   transition: background 0.25s var(--ease), color 0.25s var(--ease);
 }
-.ctl:hover { background: var(--fg); color: var(--bg); }
+.ctl:hover { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
 
 /* ------------------------------------------------------------- hero */
 #hero { padding: clamp(150px, 19vw, 210px) 0 clamp(60px, 8vw, 90px); }
@@ -212,12 +222,12 @@ html[dir="rtl"] .hero-name { letter-spacing: 0; line-height: 1.2; text-transform
   border: 1px solid var(--fg);
   transition: background 0.28s var(--ease), color 0.28s var(--ease), transform 0.28s var(--ease);
 }
-.btn-solid { background: var(--fg); color: var(--bg); }
+.btn-solid { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
 .btn:hover { transform: translateY(-2px); }
-.btn-ghost:hover { background: var(--fg); color: var(--bg); }
+.btn-ghost:hover { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
 
 .status { display: inline-flex; align-items: center; gap: 10px; color: var(--dim); margin-top: 26px; }
-.status i { width: 7px; height: 7px; border-radius: 50%; background: var(--fg); animation: pulse 2.6s infinite; flex: none; }
+.status i { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); animation: pulse 2.6s infinite; flex: none; }
 @keyframes pulse { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.2; transform: scale(0.7); } }
 
 /* ---------------------------------------------------------- readout */
@@ -262,12 +272,26 @@ html[dir="rtl"] .hero-name { letter-spacing: 0; line-height: 1.2; text-transform
   transition: background 0.32s var(--ease), color 0.32s var(--ease), padding 0.32s var(--ease);
 }
 /* the signature move: a row inverts to the opposite colour on hover */
-.proj:not(.open):hover { background: var(--fg); color: var(--bg); padding-inline: 22px 6px; }
+.proj { position: relative; isolation: isolate; }
+.proj::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  transition: transform 0.45s var(--ease);
+  z-index: -1;
+}
+html[dir="rtl"] .proj::before { transform-origin: 100% 50%; }
+.proj:not(.open):hover::before { transform: scaleX(1); }
+.proj:not(.open):hover { padding-inline: 22px 6px; }
+.proj:not(.open):hover, .proj:not(.open):hover .p-title { color: var(--on-accent); }
 .proj:not(.open):hover .p-stack, .proj:not(.open):hover .p-desc, .proj:not(.open):hover .p-no,
-.proj:not(.open):hover .p-go.dim { color: inherit; opacity: 0.72; }
-.proj:not(.open):hover .p-toggle { border-color: var(--bg); }
-.proj:not(.open):hover .p-toggle:hover { background: var(--bg); color: var(--fg); }
-.p-no { font-family: var(--mono); font-size: 0.78rem; color: var(--dim2); padding-top: 4px; }
+.proj:not(.open):hover .p-go, .proj:not(.open):hover .p-go.dim { color: var(--on-accent); opacity: 0.8; }
+.proj:not(.open):hover .p-toggle { border-color: var(--on-accent); color: var(--on-accent); }
+.proj:not(.open):hover .p-toggle:hover { background: var(--on-accent); color: var(--accent); }
+.p-no { font-family: var(--mono); font-size: 0.78rem; color: var(--accent-text); padding-top: 4px; }
 .p-title { font-size: 1.18rem; font-weight: 700; line-height: 1.25; }
 .p-stack { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.08em; color: var(--dim2); margin-top: 8px; }
 .p-desc { color: var(--dim); font-size: 0.93rem; }
@@ -282,6 +306,25 @@ html[dir="rtl"] .hero-name { letter-spacing: 0; line-height: 1.2; text-transform
   white-space: nowrap;
 }
 html[dir="rtl"] .p-go { transform: translateX(8px); }
+
+/* --------------------------------------------------------- hover wipe */
+.wipe { position: relative; isolation: isolate; }
+.wipe::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  transition: transform 0.42s var(--ease);
+  z-index: -1;
+}
+html[dir="rtl"] .wipe::before { transform-origin: 100% 50%; }
+.wipe:hover::before, .wipe:focus-visible::before { transform: scaleX(1); }
+.wipe, .wipe * { transition: color 0.3s var(--ease) 0.08s, opacity 0.3s var(--ease) 0.08s; }
+.wipe:hover, .wipe:hover * { color: var(--on-accent); }
+.wipe:hover .when, .wipe:hover .k, .wipe:hover .p-stack,
+.wipe:hover .p-desc, .wipe:hover .p-no { opacity: 0.78; }
 
 /* ------------------------------------------------------ case studies */
 .proj { grid-template-columns: 62px minmax(0, 1.05fr) minmax(0, 1.4fr) auto; }
@@ -301,11 +344,13 @@ a.p-title:hover { text-decoration: underline; text-underline-offset: 4px; }
   white-space: nowrap;
   transition: background 0.25s var(--ease), color 0.25s var(--ease);
 }
-.p-toggle:hover { background: var(--fg); color: var(--bg); }
+.p-toggle:hover { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
 .p-toggle::after { content: " +"; }
 .proj.open .p-toggle::after { content: " \2212"; }
 .p-go { opacity: 1; transform: none; text-decoration: none; }
 .p-go.dim { color: var(--dim2); }
+/* display:grid would beat the UA rule for [hidden], leaving an empty band */
+.p-case[hidden] { display: none; }
 .p-case {
   grid-column: 1 / -1;
   display: grid;
@@ -315,9 +360,11 @@ a.p-title:hover { text-decoration: underline; text-underline-offset: 4px; }
   padding-top: 22px;
   border-top: 1px solid var(--line);
 }
-.case-block h4 { color: var(--dim2); margin-bottom: 8px; }
+.case-block h4 { color: var(--accent-text); margin-bottom: 8px; }
 .case-block p { color: var(--dim); font-size: 0.92rem; }
 .proj.open { background: var(--panel); }
+.proj.open .p-no, .proj.open .p-toggle { color: var(--accent-text); }
+.proj.open .p-toggle { border-color: var(--accent-text); }
 
 /* --------------------------------------------------------- activity */
 .act-grid { margin-top: 40px; display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 40px; }
@@ -331,27 +378,27 @@ a.p-title:hover { text-decoration: underline; text-underline-offset: 4px; }
   font-size: 0.95rem;
   transition: padding 0.25s var(--ease), background 0.25s var(--ease), color 0.25s var(--ease);
 }
-a.act-row:hover { background: var(--fg); color: var(--bg); padding-inline: 12px 4px; }
+a.act-row:hover { padding-inline: 12px 4px; }
 .act-row .when { font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.08em; color: var(--dim2); flex: none; }
-a.act-row:hover .when { color: inherit; opacity: 0.72; }
+
 .lang-row { display: grid; grid-template-columns: 130px 1fr 44px; gap: 12px; align-items: center; padding: 11px 4px; border-bottom: 1px solid var(--line); font-size: 0.92rem; }
 .lang-bar { height: 6px; background: var(--line); }
-.lang-bar i { display: block; height: 100%; background: var(--fg); }
+.lang-bar i { display: block; height: 100%; background: var(--accent); transform-origin: 0 50%; }
 .lang-row .n { font-family: var(--mono); font-size: 0.72rem; color: var(--dim2); text-align: end; }
 
 /* ----------------------------------------------------------- skills */
 .skill-cols { margin-top: 40px; display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 34px; }
 .skill-col h4 { padding-bottom: 12px; border-bottom: 1px solid var(--line-strong); color: var(--dim2); }
 .skill-row { display: flex; align-items: center; justify-content: space-between; gap: 18px; padding: 12px 0; border-bottom: 1px solid var(--line); font-size: 0.95rem; }
-.meter { font-family: var(--mono); font-size: 0.8rem; letter-spacing: 0.1em; flex: none; color: var(--fg); }
+.meter { font-family: var(--mono); font-size: 0.8rem; letter-spacing: 0.1em; flex: none; color: var(--accent-text); }
 .meter em { opacity: 0.22; font-style: normal; }
 
 /* ------------------------------------------------------------ certs */
 .certs { margin-top: 40px; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); }
 .cert { background: var(--bg); padding: 26px 24px; transition: background 0.3s var(--ease), color 0.3s var(--ease); }
-.cert:hover { background: var(--fg); color: var(--bg); }
-.cert .tag { color: var(--dim2); }
-.cert:hover .tag, .cert:hover p { color: inherit; opacity: 0.75; }
+
+.cert .tag { color: var(--accent-text); }
+
 .cert h4 { margin-top: 12px; font-size: 1rem; font-weight: 700; }
 .cert p { margin-top: 8px; color: var(--dim); font-size: 0.88rem; }
 
@@ -365,9 +412,9 @@ a.act-row:hover .when { color: inherit; opacity: 0.72; }
   font-size: 1.02rem;
   transition: background 0.3s var(--ease), color 0.3s var(--ease), padding 0.3s var(--ease);
 }
-.contact-row:hover { background: var(--fg); color: var(--bg); padding-inline: 18px 8px; }
+.contact-row:hover { padding-inline: 18px 8px; }
 .contact-row .k { color: var(--dim2); flex: none; width: 130px; }
-.contact-row:hover .k { color: inherit; opacity: 0.72; }
+
 
 footer { border-top: 1px solid var(--line); padding: 24px 0; color: var(--dim2); }
 .foot-inner { display: flex; flex-wrap: wrap; gap: 12px; justify-content: space-between; }
@@ -685,22 +732,22 @@ footer { border-top: 1px solid var(--line); padding: 24px 0; color: var(--dim2);
     </div>
 
     <div class="certs">
-      <div class="cert rv">
+      <div class="cert wipe rv">
         <div class="tag mono">SDAIA · 2025</div>
         <h4 data-ar="الهيئة السعودية للبيانات والذكاء الاصطناعي">Saudi Data &amp; AI Authority</h4>
         <p data-ar="أساسيات الذكاء الاصطناعي · مفاهيم الذكاء الاصطناعي وتطبيقاته المتقدمة">AI Fundamentals · AI Concepts and Advanced Applications</p>
       </div>
-      <div class="cert rv">
+      <div class="cert wipe rv">
         <div class="tag mono">CISCO</div>
         <h4 data-ar="أكاديمية سيسكو للشبكات">Cisco Networking Academy</h4>
         <p data-ar="خمس شهادات: مقدمة في علم البيانات · مسار فني الشبكات · دعم وأمن الشبكات · أساسيات الشبكات · مقدمة في الأمن السيبراني">Five certifications: Introduction to Data Science · Network Technician Career Path · Network Support and Security · Networking Basics · Introduction to Cybersecurity</p>
       </div>
-      <div class="cert rv">
+      <div class="cert wipe rv">
         <div class="tag mono">DOROOB · 2025</div>
         <h4 data-ar="دروب — أكاديمية stc">Doroob — stc Academy</h4>
         <p data-ar="الذكاء الاصطناعي وتحليل البيانات في مستقبل سوق العمل">AI and Data Analysis in the Future of the Labor Market</p>
       </div>
-      <div class="cert rv">
+      <div class="cert wipe rv">
         <div class="tag mono">AMAD · 2026</div>
         <h4 data-ar="هاكاثون أمد">Amad Hackathon</h4>
         <p data-ar="الذكاء الاصطناعي التوليدي للتقنية المالية — بنك الإنماء وأكاديمية طويق، الرياض">Generative AI for FinTech — Inma Bank &amp; Tuwaiq Academy, Riyadh</p>
@@ -719,12 +766,12 @@ footer { border-top: 1px solid var(--line); padding: 24px 0; color: var(--dim2);
     <p class="lede rv" data-ar="متاح لوظائف هندسة برمجيات ودعم التطبيقات والبيانات، وللعمل الحر على المنتجات.">Open to junior software engineering roles, applications and data support, and freelance product work.</p>
 
     <div class="contact-list rv">
-      <a class="contact-row" href="mailto:alshareef12k@gmail.com"><span class="k mono" data-ar="البريد">EMAIL</span><span dir="ltr">alshareef12k@gmail.com</span></a>
-      <a class="contact-row" href="https://www.linkedin.com/in/ahmed-alshareef-7b882b417" target="_blank" rel="noreferrer"><span class="k mono">LINKEDIN</span><span dir="ltr">ahmed-alshareef</span></a>
-      <a class="contact-row" href="https://github.com/whyKaiser" target="_blank" rel="noreferrer"><span class="k mono">GITHUB</span><span dir="ltr">whyKaiser</span></a>
-      <a class="contact-row" href="https://x.com/alshareef12k" target="_blank" rel="noreferrer"><span class="k mono">X</span><span dir="ltr">@alshareef12k</span></a>
-      <a class="contact-row" href="assets/Ahmed-Alshareef-CV.pdf" download><span class="k mono" data-ar="السيرة">CV</span><span dir="ltr">Ahmed-Alshareef-CV.pdf</span></a>
-      <a class="contact-row" href="tel:+966544964489"><span class="k mono" data-ar="الجوال">PHONE</span><span dir="ltr">+966 54 496 4489</span></a>
+      <a class="contact-row wipe" href="mailto:alshareef12k@gmail.com"><span class="k mono" data-ar="البريد">EMAIL</span><span dir="ltr">alshareef12k@gmail.com</span></a>
+      <a class="contact-row wipe" href="https://www.linkedin.com/in/ahmed-alshareef-7b882b417" target="_blank" rel="noreferrer"><span class="k mono">LINKEDIN</span><span dir="ltr">ahmed-alshareef</span></a>
+      <a class="contact-row wipe" href="https://github.com/whyKaiser" target="_blank" rel="noreferrer"><span class="k mono">GITHUB</span><span dir="ltr">whyKaiser</span></a>
+      <a class="contact-row wipe" href="https://x.com/alshareef12k" target="_blank" rel="noreferrer"><span class="k mono">X</span><span dir="ltr">@alshareef12k</span></a>
+      <a class="contact-row wipe" href="assets/Ahmed-Alshareef-CV.pdf" download><span class="k mono" data-ar="السيرة">CV</span><span dir="ltr">Ahmed-Alshareef-CV.pdf</span></a>
+      <a class="contact-row wipe" href="tel:+966544964489"><span class="k mono" data-ar="الجوال">PHONE</span><span dir="ltr">+966 54 496 4489</span></a>
     </div>
   </div>
 </section>
@@ -989,7 +1036,7 @@ footer { border-top: 1px solid var(--line); padding: 24px 0; color: var(--dim2);
       var repoBox = document.getElementById("act-repos");
       recent.forEach(function (r) {
         var a = document.createElement("a");
-        a.className = "act-row";
+        a.className = "act-row wipe";
         a.href = r.html_url;
         a.target = "_blank";
         a.rel = "noreferrer";
@@ -1016,6 +1063,9 @@ footer { border-top: 1px solid var(--line); padding: 24px 0; color: var(--dim2);
         bar.className = "lang-bar";
         var fill = document.createElement("i");
         fill.style.width = Math.round((langCount[name] / max) * 100) + "%";
+        fill.style.transform = "scaleX(0)";
+        fill.style.transition = "transform 0.8s cubic-bezier(0.22,0.61,0.36,1)";
+        setTimeout(function () { fill.style.transform = "scaleX(1)"; }, 60);
         bar.appendChild(fill);
         var n = document.createElement("span");
         n.className = "n";
