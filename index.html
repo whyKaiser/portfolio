@@ -884,19 +884,37 @@ footer { border-top: 1px solid var(--line); padding: 24px 0; color: var(--dim2);
 
   /* ------------------------------------------------------------ stars
      A star field drawn in the foreground colour, so inverting the theme
-     turns white stars on black into black stars on white. Three parallax
-     depths drift with the scroll; the brightest few breathe slowly.     */
+     turns white stars on black into black specks on white.
+
+     Four things keep it alive, all cheap and all off under
+     prefers-reduced-motion:
+       drift    - every star has its own velocity, scaled by depth
+       parallax - the field leans a little towards the pointer
+       streaks  - fast scrolling stretches stars into motion lines
+       meteors  - one ember streak crosses every 8 to 20 seconds       */
   var canvas = document.getElementById("stars");
   var ctx = canvas.getContext("2d");
   var stars = [];
   var dpr = Math.min(window.devicePixelRatio || 1, 2);
-  var w = 0, h = 0, scrollY = 0, rgb = "255,255,255";
+  var w = 0, h = 0, scrollY = 0, rgb = "255,255,255", accent = "194,102,47";
+
+  // pointer parallax, eased towards the target so it never snaps
+  var pxTarget = 0, pyTarget = 0, px = 0, py = 0;
+  // scroll speed, smoothed, drives the streak length
+  var scrollVel = 0;
+  var meteor = null, nextMeteor = 4000;
+
+  function toRgb(value, fallback) {
+    var c = value.trim();
+    return c.indexOf("#") === 0 && c.length >= 7
+      ? [parseInt(c.substr(1, 2), 16), parseInt(c.substr(3, 2), 16), parseInt(c.substr(5, 2), 16)].join(",")
+      : fallback;
+  }
 
   function readColor() {
-    var c = getComputedStyle(root).getPropertyValue("--fg").trim();
-    rgb = c.indexOf("#") === 0 && c.length >= 7
-      ? [parseInt(c.substr(1, 2), 16), parseInt(c.substr(3, 2), 16), parseInt(c.substr(5, 2), 16)].join(",")
-      : "255,255,255";
+    var cs = getComputedStyle(root);
+    rgb = toRgb(cs.getPropertyValue("--fg"), "255,255,255");
+    accent = toRgb(cs.getPropertyValue("--accent-text"), "194,102,47");
   }
 
   function build() {
@@ -912,41 +930,132 @@ footer { border-top: 1px solid var(--line); padding: 24px 0; color: var(--dim2);
     stars = [];
     for (var i = 0; i < count; i++) {
       var depth = i % 3;                       // 0 far, 2 near
+      var dir = Math.random() * Math.PI * 2;
+      var speed = [0.008, 0.018, 0.032][depth] * (0.5 + Math.random());
       stars.push({
         x: Math.random() * w,
         y: Math.random() * (h * 2),            // extra height to parallax into
         r: [0.6, 1.0, 1.5][depth] * (0.7 + Math.random() * 0.7),
         a: [0.28, 0.46, 0.7][depth] * (0.6 + Math.random() * 0.5),
         d: [0.06, 0.14, 0.26][depth],          // parallax factor
+        vx: Math.cos(dir) * speed,
+        vy: Math.sin(dir) * speed,
+        lean: [4, 10, 20][depth],              // pixels of pointer lean
         tw: Math.random() < 0.22,              // only a few twinkle
         ph: Math.random() * Math.PI * 2
       });
     }
   }
 
-  function draw(t) {
+  function spawnMeteor() {
+    // always enters from the top edge and crosses downwards, never upwards,
+    // so it reads as falling rather than as a stray cursor
+    var fromLeft = Math.random() < 0.5;
+    var speed = 7 + Math.random() * 5;
+    var angle = (fromLeft ? 0.45 : Math.PI - 0.45) + (Math.random() - 0.5) * 0.18;
+    meteor = {
+      x: fromLeft ? -60 : w + 60,
+      y: Math.random() * h * 0.5,
+      vx: Math.cos(angle) * speed,
+      vy: Math.sin(angle) * speed,
+      len: 90 + Math.random() * 70,
+      life: 1
+    };
+  }
+
+  function draw(t, dt) {
     ctx.clearRect(0, 0, w, h);
+
+    px += (pxTarget - px) * 0.05;
+    py += (pyTarget - py) * 0.05;
+
+    var streak = Math.min(Math.abs(scrollVel) * 0.55, 26);
+
     for (var i = 0; i < stars.length; i++) {
       var s = stars[i];
+
+      if (!reduced) {
+        s.x += s.vx * dt;
+        s.y += s.vy * dt;
+        if (s.x < -6) s.x = w + 6; else if (s.x > w + 6) s.x = -6;
+      }
+
       var y = s.y - scrollY * s.d;
       y = ((y % (h * 2)) + h * 2) % (h * 2);   // wrap so the field never runs out
-      if (y > h + 4) continue;
+      if (y > h + 30) continue;
+
+      var x = s.x + px * s.lean;
       var a = s.a;
       if (s.tw && !reduced) a *= 0.55 + 0.45 * Math.sin(t / 1400 + s.ph);
+
       ctx.globalAlpha = a;
-      ctx.fillStyle = "rgb(" + rgb + ")";
-      ctx.beginPath();
-      ctx.arc(s.x, y, s.r, 0, 6.2832);
-      ctx.fill();
+      var tail = streak * (s.d / 0.26);        // near stars stretch most
+      if (tail > 1.5) {
+        ctx.strokeStyle = "rgb(" + rgb + ")";
+        ctx.lineWidth = s.r * 1.4;
+        ctx.lineCap = "round";
+        ctx.beginPath();
+        ctx.moveTo(x, y - (scrollVel > 0 ? tail : -tail));
+        ctx.lineTo(x, y + py * s.lean * 0.2);
+        ctx.stroke();
+      } else {
+        ctx.fillStyle = "rgb(" + rgb + ")";
+        ctx.beginPath();
+        ctx.arc(x, y + py * s.lean * 0.2, s.r, 0, 6.2832);
+        ctx.fill();
+      }
     }
+
+    if (meteor) {
+      meteor.x += meteor.vx * dt;
+      meteor.y += meteor.vy * dt;
+      meteor.life -= 0.004 * dt;
+      var tx = meteor.x - meteor.vx * (meteor.len / 8);
+      var ty = meteor.y - meteor.vy * (meteor.len / 8);
+      var g = ctx.createLinearGradient(meteor.x, meteor.y, tx, ty);
+      g.addColorStop(0, "rgba(" + accent + "," + Math.max(0, meteor.life) + ")");
+      g.addColorStop(1, "rgba(" + accent + ",0)");
+      ctx.globalAlpha = 1;
+      ctx.strokeStyle = g;
+      ctx.lineWidth = 1.6;
+      ctx.lineCap = "round";
+      ctx.beginPath();
+      ctx.moveTo(meteor.x, meteor.y);
+      ctx.lineTo(tx, ty);
+      ctx.stroke();
+      if (meteor.life <= 0 || meteor.y > h + 80 || meteor.x < -120 || meteor.x > w + 120) {
+        meteor = null;
+      }
+    }
+
     ctx.globalAlpha = 1;
   }
 
-  var needsDraw = true;
+  var needsDraw = true, prevT = 0;
   function loop(t) {
-    if (needsDraw || !reduced) draw(t || 0);
+    t = t || 0;
+    var dt = Math.min((t - prevT) / 16.67, 3);  // frames elapsed, capped after a tab switch
+    prevT = t;
+
+    if (!reduced) {
+      scrollVel *= 0.86;                        // decay the streak back to dots
+      nextMeteor -= dt * 16.67;
+      if (!meteor && nextMeteor <= 0) {
+        spawnMeteor();
+        nextMeteor = 8000 + Math.random() * 12000;
+      }
+    }
+
+    if (needsDraw || !reduced) draw(t, dt);
     needsDraw = false;
     requestAnimationFrame(loop);
+  }
+
+  if (!reduced && window.matchMedia("(pointer: fine)").matches) {
+    window.addEventListener("pointermove", function (e) {
+      pxTarget = (e.clientX / w - 0.5) * 2;
+      pyTarget = (e.clientY / h - 0.5) * 2;
+    }, { passive: true });
   }
 
   window.__stars = { recolor: function () { readColor(); needsDraw = true; } };
@@ -966,7 +1075,9 @@ footer { border-top: 1px solid var(--line); padding: 24px 0; color: var(--dim2);
   var ticking = false;
 
   function onScroll() {
+    var prev = scrollY;
     scrollY = window.scrollY || window.pageYOffset;
+    scrollVel = scrollY - prev;
     needsDraw = true;
     var max = document.body.scrollHeight - window.innerHeight;
     progress.style.width = (max > 0 ? (scrollY / max) * 100 : 0) + "%";
