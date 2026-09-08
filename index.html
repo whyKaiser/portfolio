@@ -418,6 +418,27 @@ a.act-row:hover { padding-inline: 12px 4px; }
 .lang-bar i { display: block; height: 100%; background: var(--accent); transform-origin: 0 50%; }
 .lang-row .n { font-family: var(--mono); font-size: 0.72rem; color: var(--dim2); text-align: end; }
 
+/* --------------------------------------------------------- applied ai */
+.ai-rows { margin-top: 40px; border-top: 1px solid var(--line); }
+.ai-row {
+  display: grid;
+  grid-template-columns: 190px minmax(0, 1fr) 190px;
+  gap: 26px;
+  align-items: start;
+  padding: 22px 6px;
+  border-bottom: 1px solid var(--line);
+  transition: background 0.3s var(--ease), padding-inline-start 0.3s var(--ease);
+}
+.ai-row:hover { background: var(--panel); padding-inline-start: 14px; }
+.ai-k { color: var(--accent-text); padding-top: 2px; }
+.ai-v { color: var(--dim); font-size: 0.95rem; }
+.ai-w { color: var(--dim2); font-size: 0.64rem; text-align: end; padding-top: 4px; }
+html[dir="rtl"] .ai-w { font-size: 0.72rem; }
+@media (max-width: 940px) {
+  .ai-row { grid-template-columns: 1fr; gap: 8px; }
+  .ai-w { text-align: start; }
+}
+
 /* ----------------------------------------------------------- skills */
 .skill-cols { margin-top: 40px; display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 34px; }
 .skill-col h4 { padding-bottom: 12px; border-bottom: 1px solid var(--line-strong); color: var(--dim2); }
@@ -490,6 +511,7 @@ footer { border-top: 1px solid var(--line); padding: 24px 0; color: var(--dim2);
     <nav class="nav-links mono">
       <a href="#work" data-ar="الخبرة">Work</a>
       <a href="#projects" data-ar="المشاريع">Projects</a>
+      <a href="#ai" data-ar="الذكاء الاصطناعي">AI</a>
       <a href="#skills" data-ar="المهارات">Skills</a>
       <a href="#certs" data-ar="الشهادات">Certs</a>
       <a href="#contact" data-ar="تواصل">Contact</a>
@@ -727,11 +749,76 @@ footer { border-top: 1px solid var(--line); padding: 24px 0; color: var(--dim2);
   </div>
 </section>
 
+<!-- ============================================================== AI -->
+<section id="ai">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <span class="mono idx">04</span>
+      <h2 class="h2" data-ar="الذكاء الاصطناعي التطبيقي">Applied AI</h2>
+    </div>
+    <p class="lede rv" data-ar="أدمج النماذج في منتجات حقيقية ولا أدرّبها. كل سطر تحته مشروع يمكنك فتحه، والحدود مذكورة كما هي.">I integrate models into shipped products; I do not train them. Every line below has a project behind it, and the limits are stated as they are.</p>
+
+    <div class="ai-rows">
+
+      <div class="ai-row rv">
+        <div class="ai-k mono" data-ar="مزوّدو النماذج">Model providers</div>
+        <div class="ai-v" data-ar="Groq بنموذج llama-3.3-70b، وGoogle Gemini للرؤية، وCloudflare Workers AI على الحافة — مختارين حسب الكلفة والزمن لا حسب الشهرة.">Groq running llama-3.3-70b, Google Gemini for vision, and Cloudflare Workers AI at the edge — chosen for cost and latency rather than for the name.</div>
+        <div class="ai-w mono">DHAKKER · ZAD · SERA</div>
+      </div>
+
+      <div class="ai-row rv">
+        <div class="ai-k mono" data-ar="إجابات مؤسَّسة">Grounded answers</div>
+        <div class="ai-v" data-ar="قاعدة البيانات تجيب أولًا، والنموذج بديل موسوم بوضوح لا مصدر حقيقة. المستخدم يعرف أي رقم موثّق وأيّه تقديري.">The database answers first and the model is a clearly labelled fallback, never the source of truth. The user can tell a verified number from an estimated one.</div>
+        <div class="ai-w mono">ZAD</div>
+      </div>
+
+      <div class="ai-row rv">
+        <div class="ai-k mono" data-ar="فصل الحساب عن الشرح">Deterministic core</div>
+        <div class="ai-v" data-ar="المنطق المالي يعمل محليًا بحساب حتمي، والنموذج يشرح النتيجة بالعربية ولا يلمس أي رقم. كل رقم على الشاشة يُتتبَّع إلى المحرّك.">The financial logic runs locally and deterministically; the model writes the Arabic explanation and never touches a number. Every figure on screen traces back to the engine.</div>
+        <div class="ai-w mono">WAQFA</div>
+      </div>
+
+      <div class="ai-row rv">
+        <div class="ai-k mono" data-ar="متى لا أستخدمه">Knowing when not to</div>
+        <div class="ai-v" data-ar="القرارات ذات الأثر النظامي تُبنى على قواعد موثّقة بمصادرها، بلا نموذج لغوي في مسار الحكم — لأن الحكم يجب أن يُراجَع لا أن يُصدَّق.">Decisions with legal weight run on rules with cited sources and no language model in the verdict path, because a verdict has to be checkable rather than believable.</div>
+        <div class="ai-w mono">RENT FREEZE CHECKER</div>
+      </div>
+
+      <div class="ai-row rv">
+        <div class="ai-k mono" data-ar="البثّ والاستجابة">Streaming</div>
+        <div class="ai-v" data-ar="ردود تُبثّ عبر SSE من Worker على الحافة مع تخزين في D1 — بلا خادم دائم التشغيل.">Responses streamed over server-sent events from an edge Worker, with D1 behind them and no always-on server.</div>
+        <div class="ai-w mono">SERA</div>
+      </div>
+
+      <div class="ai-row rv">
+        <div class="ai-k mono" data-ar="أمن المفاتيح والكلفة">Keys and cost</div>
+        <div class="ai-v" data-ar="المفاتيح تمرّ عبر Cloudflare Worker ولا تُحزم في التطبيق، مع تحكّم في حجم السياق لضبط الكلفة.">API keys are proxied through a Cloudflare Worker instead of being bundled into the app, with context size kept in hand to control cost.</div>
+        <div class="ai-w mono">DHAKKER · SERA</div>
+      </div>
+
+      <div class="ai-row rv">
+        <div class="ai-k mono" data-ar="صوت بلا يدين">Voice</div>
+        <div class="ai-v" data-ar="إدخال وإخراج صوتي للاستخدام أثناء انشغال اليدين — وهو الوضع الطبيعي أثناء المناسك.">Speech in and out for use while both hands are busy, which is the normal case during the rituals.</div>
+        <div class="ai-w mono">DHAKKER</div>
+      </div>
+
+      <div class="ai-row rv">
+        <div class="ai-k mono" data-ar="أدوات داخل المحرّر">In-editor tooling</div>
+        <div class="ai-v" data-ar="إضافة وكيل ذكاء اصطناعي داخل محرّر Godot لتسريع العمل المتكرر أثناء تطوير اللعبة.">A custom AI agent addon inside the Godot editor, to take the repetitive work out of game development.</div>
+        <div class="ai-w mono">WAGER OF IRAM</div>
+      </div>
+
+    </div>
+
+    <p class="lede rv" style="margin-top:28px" data-ar="خارج نطاقي: تدريب النماذج أو ضبطها الدقيق أو أبحاث تعلّم الآلة. شهاداتي في الذكاء الاصطناعي من سدايا: أساسيات الذكاء الاصطناعي، ومفاهيمه وتطبيقاته المتقدمة.">Outside my scope: training models, fine-tuning them, or machine-learning research. My AI credentials are from SDAIA: AI Fundamentals, and AI Concepts and Advanced Applications.</p>
+  </div>
+</section>
+
 <!-- ========================================================== SKILLS -->
 <section id="skills">
   <div class="wrap">
     <div class="sec-head rv">
-      <span class="mono idx">04</span>
+      <span class="mono idx">05</span>
       <h2 class="h2" data-ar="المهارات">Capabilities</h2>
     </div>
 
@@ -741,7 +828,8 @@ footer { border-top: 1px solid var(--line); padding: 24px 0; color: var(--dim2);
         <div class="skill-row"><span>Flutter / Dart</span><span class="meter">████</span></div>
         <div class="skill-row"><span>React / TypeScript</span><span class="meter">███<em>█</em></span></div>
         <div class="skill-row"><span>JavaScript / HTML / CSS</span><span class="meter">███<em>█</em></span></div>
-        <div class="skill-row"><span>Java / C++</span><span class="meter">██<em>██</em></span></div>
+        <div class="skill-row"><span>C++</span><span class="meter">██<em>██</em></span></div>
+        <div class="skill-row"><span>Java</span><span class="meter">██<em>██</em></span></div>
         <div class="skill-row"><span>C# / Unity</span><span class="meter">██<em>██</em></span></div>
         <div class="skill-row"><span>GDScript / Godot</span><span class="meter">███<em>█</em></span></div>
       </div>
@@ -769,7 +857,7 @@ footer { border-top: 1px solid var(--line); padding: 24px 0; color: var(--dim2);
 <section id="certs">
   <div class="wrap">
     <div class="sec-head rv">
-      <span class="mono idx">05</span>
+      <span class="mono idx">06</span>
       <h2 class="h2" data-ar="الشهادات">Credentials</h2>
     </div>
 
@@ -802,7 +890,7 @@ footer { border-top: 1px solid var(--line); padding: 24px 0; color: var(--dim2);
 <section id="contact">
   <div class="wrap">
     <div class="sec-head rv">
-      <span class="mono idx">06</span>
+      <span class="mono idx">07</span>
       <h2 class="h2" data-ar="تواصل">Contact</h2>
     </div>
     <p class="lede rv" data-ar="متاح لوظائف هندسة برمجيات ودعم التطبيقات والبيانات، وللعمل الحر على المنتجات.">Open to junior software engineering roles, applications and data support, and freelance product work.</p>
